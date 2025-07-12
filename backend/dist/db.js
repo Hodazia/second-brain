@@ -52,11 +52,11 @@ const UserSchema = new mongoose_1.Schema({
 });
 exports.UserModel = (0, mongoose_1.model)("User", UserSchema);
 const ContentSchema = new mongoose_1.Schema({
-    title: { String, required: true },
-    content: { String, required: true },
-    link: { String, required: true },
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+    link: { type: String, required: true },
     tags: [String],
-    type: { String, required: true },
+    type: { type: String, required: true },
     userId: { type: mongoose_1.default.Types.ObjectId, ref: 'User', required: true },
 });
 const LinkSchema = new mongoose_1.Schema({

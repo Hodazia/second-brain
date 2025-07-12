@@ -3,6 +3,7 @@ import { UserModel } from "../db";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import {z} from "zod";
+import { JWT_TOKEN } from "../config";
 
 // define auth routes like login and signup,
 export const Signup = async (req:Request, res:Response): Promise<void> => {
@@ -80,6 +81,56 @@ export const Signup = async (req:Request, res:Response): Promise<void> => {
     }
 }
 
-export const sigin = async (req:Request, res:Response): Promise<void> => {
+export const Signin = async (req:Request, res:Response): Promise<void> => {
+    // sigin body passed as this
+    const username = req.body.username;
+    const password = req.body.password;
 
+    try {
+        // check if the user has passed both the inputs, username and password
+        if (!username || !password) {
+            console.error('Missing credentials:', { username: !!username, password: !!password });
+            res.status(400).json({
+                message: "Username and password are required"
+            });
+            return;
+        }
+
+        // find if the user already exists in the DB
+        const existingUser = await UserModel.findOne({ username });
+        if (!existingUser) {
+            console.error('User not found:', username);
+            res.status(403).json({
+                message: "User not found"
+            });
+            return;
+        }
+
+        // compoare the now password with existinguser password
+        const isPasswordValid = await bcrypt.compare(password, existingUser.password || '');
+        if (!isPasswordValid) {
+            console.error('Invalid password for user:', username);
+            res.status(403).json({
+                message: "Incorrect password"
+            });
+            return;
+        }
+
+        const token = jwt.sign({
+            id: existingUser._id
+        }, JWT_TOKEN);
+
+        console.log('Successfully signed in user:', username);
+
+        res.json({
+            token
+        });
+    }
+    catch(error)
+    {
+        console.error('Error during signin:', error);
+        res.status(500).json({
+            message: "Error signing in"
+        });
+    }
 }

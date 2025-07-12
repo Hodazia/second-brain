@@ -17,11 +17,11 @@ const UserSchema = new Schema({
 export const UserModel = model("User", UserSchema);
 
 const ContentSchema = new Schema({
-    title: { String, required:true},
-    content:  {String, required:true},
-    link: { String, required:true},
+    title: { type: String, required: true},
+    content: { type: String, required: true},
+    link: { type: String, required: true},
     tags: [String],
-    type: { String, required:true},
+    type: { type: String, required: true},
     userId: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
 })
 
