@@ -74,3 +74,30 @@ export const GetContent = async (req:Request, res:Response) :Promise <void>  => 
         });
     }
 }
+
+export const DeleteContent = async (req: Request, res: Response): Promise<void> => {
+    const contentId = req.body.contentId;
+
+    try {
+        const result = await ContentModel.deleteOne({
+            _id: contentId,
+            //@ts-ignore
+            userId: req.userId
+        });
+
+        if (result.deletedCount === 0) {
+            res.status(404).json({
+                message: "Content not found or you don't have permission to delete it"
+            });
+            return;
+        }
+
+        res.json({
+            message: "Content deleted successfully"
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Error deleting content"
+        });
+    }
+}
