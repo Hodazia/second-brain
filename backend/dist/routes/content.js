@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetContent = exports.PostContent = void 0;
+exports.DeleteContent = exports.GetContent = exports.PostContent = void 0;
 const db_1 = require("../db");
 const PostContent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // check what we are getting from the post request;
@@ -75,3 +75,28 @@ const GetContent = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.GetContent = GetContent;
+const DeleteContent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const contentId = req.body.contentId;
+    try {
+        const result = yield db_1.ContentModel.deleteOne({
+            _id: contentId,
+            //@ts-ignore
+            userId: req.userId
+        });
+        if (result.deletedCount === 0) {
+            res.status(404).json({
+                message: "Content not found or you don't have permission to delete it"
+            });
+            return;
+        }
+        res.json({
+            message: "Content deleted successfully"
+        });
+    }
+    catch (error) {
+        res.status(500).json({
+            message: "Error deleting content"
+        });
+    }
+});
+exports.DeleteContent = DeleteContent;
