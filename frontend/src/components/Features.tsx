@@ -48,7 +48,8 @@ export const Features = () => {
         <div className="text-center mb-20">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Your Digital Brain,
-            <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent block">
+            <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text 
+            text-transparent block">
               Supercharged
             </span>
           </h2>

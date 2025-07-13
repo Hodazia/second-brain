@@ -1,5 +1,5 @@
 
-import { Brain, Twitter, Github, Mail } from "lucide-react";
+import { Brain, Twitter, Github, Mail, Heart } from "lucide-react";
 import { Button } from "../components/ui/button";
 
 export const Footer = () => {
@@ -8,6 +8,7 @@ export const Footer = () => {
       <div className="container mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-8 mb-12">
           {/* Logo and description */}
+          {/*so divide it into 4 grids, but the first gird takes 2 columns size */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-6">
               <div className="bg-gradient-to-r from-purple-600 to-blue-600 p-3 rounded-xl">
@@ -34,7 +35,7 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Product links */}
+          {/* second grid => Product links */}
           <div>
             <h4 className="font-semibold mb-4 text-foreground">Product</h4>
             <div className="space-y-3">
@@ -45,7 +46,7 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Company links */}
+          {/* Third grid => Company links */}
           <div>
             <h4 className="font-semibold mb-4 text-foreground">Company</h4>
             <div className="space-y-3">
@@ -57,7 +58,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Final CTA section */}
+        {/*Fouth grid =>  Final CTA section */}
         <div className="border-t border-border pt-12 mb-8">
           <div className="text-center">
             <h3 className="text-3xl font-bold mb-4 text-foreground">
@@ -77,9 +78,16 @@ export const Footer = () => {
 
         {/* Copyright */}
         <div className="border-t border-border pt-8 text-center text-muted-foreground">
-          <p>&copy; 2024 BrainVault. All rights reserved.</p>
+          <p>&copy; 2025 BrainVault. All rights reserved.</p>
+          <p className="flex items-center justify-center gap-1 mt-2">
+            Made with 
+            <Heart className="w-8 h-8 text-pink-500"/>  
+            by Ziaul Hoda
+          </p>
         </div>
       </div>
+
+
     </footer>
   );
 };
