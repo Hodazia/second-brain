@@ -1,5 +1,6 @@
 import { Features } from "../components/Features";
 import { Hero } from "../components/Hero";
+import { HowItWorks } from "../components/HowItWorks";
 
 const Landingpage = () =>{ 
     return (
@@ -10,6 +11,7 @@ const Landingpage = () =>{
          to-[hsl(var(--hero-gradient-to))]">
             <Hero />
             <Features />
+            <HowItWorks />
         </div>
         </>
     )
