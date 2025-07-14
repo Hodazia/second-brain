@@ -6,6 +6,7 @@ import Landingpage from './pages/Landingpage'
 import { ThemeProvider } from './context/themeContext.tsx'
 import Csx from './components/Csx.tsx'
 import SignUp from './pages/SignUp.tsx'
+import Signin from './pages/SignIn.tsx'
 import { Toaster } from 'sonner'
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Routes>
               <Route path='/' element={<Landingpage />}/>
               <Route path='/signup' element={<SignUp />}/>
+              <Route path='/signin' element={<Signin />}/>
             </Routes>
           </BrowserRouter>
         </ThemeProvider>

@@ -1,8 +1,10 @@
 
 import { Brain, Twitter, Github, Mail, Heart } from "lucide-react";
 import { Button } from "../components/ui/button";
-
+import { useNavigate } from "react-router-dom";
 export const Footer = () => {
+
+  const navigate = useNavigate();
   return (
     <footer className="bg-card border-t border-border py-16">
       <div className="container mx-auto px-6">
@@ -70,6 +72,7 @@ export const Footer = () => {
             <Button 
               size="lg"
               className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-12 py-4 text-lg font-semibold rounded-full shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
+              onClick={() => navigate('/signup')}
             >
               Get Started Free
             </Button>

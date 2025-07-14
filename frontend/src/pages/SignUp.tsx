@@ -18,6 +18,7 @@ import {
     FormMessage,
   } from "../components/ui/form";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 /*how to use toast library, first write toast and then write 
 Toaster in the App.tsx  */
 // export default function Success() {
@@ -47,6 +48,8 @@ const formSchema = z.object({
     path: ["repeatPassword"],
 });
 
+// Define the form data type based on the schema
+type FormData = z.infer<typeof formSchema>;
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -139,7 +142,7 @@ const Signup = () => {
                       )}
                     />
                     
-                    <FormField
+                    {/* <FormField
                       control={form.control}
                       name="email"
                       render={({ field }) => (
@@ -157,7 +160,7 @@ const Signup = () => {
                           <FormMessage />
                         </FormItem>
                       )}
-                    />
+                    /> */}
     
                     <FormField
                       control={form.control}
@@ -249,4 +252,3 @@ const Signup = () => {
     };
     
 export default Signup;
-    

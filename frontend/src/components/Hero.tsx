@@ -1,9 +1,11 @@
 
 import { Brain, ArrowRight, Play } from "lucide-react";
 import { Button } from "../components/ui/button";
-
+import { useNavigate } from "react-router-dom";
 // hero section for tha landing page
 export const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated background elements */}
@@ -44,6 +46,7 @@ export const Hero = () => {
             className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white 
             px-8 py-4 text-lg font-semibold rounded-full shadow-2xl 
             hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 hover:translate-x-2"
+            onClick={() => navigate('/signup')}
           >
             Get Started Free
             <ArrowRight className="ml-2 w-5 h-5" />
