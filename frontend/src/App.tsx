@@ -8,6 +8,8 @@ import Csx from './components/Csx.tsx'
 import SignUp from './pages/SignUp.tsx'
 import Signin from './pages/SignIn.tsx'
 import { Toaster } from 'sonner'
+import { CardContent } from './components/CardContent.tsx'
+
 function App() {
   return (
         /* <Csx variant={'primary'} noofwheels={4}/>
@@ -21,6 +23,7 @@ function App() {
               <Route path='/' element={<Landingpage />}/>
               <Route path='/signup' element={<SignUp />}/>
               <Route path='/signin' element={<Signin />}/>
+              <Route path='/dashboard' element={<CardContent />}/>
             </Routes>
           </BrowserRouter>
         </ThemeProvider>
