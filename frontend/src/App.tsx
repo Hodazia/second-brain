@@ -9,6 +9,7 @@ import SignUp from './pages/SignUp.tsx'
 import Signin from './pages/SignIn.tsx'
 import { Toaster } from 'sonner'
 import { CardContent } from './components/CardContent.tsx'
+import { Dashboard } from './pages/Dashboard.tsx'
 
 function App() {
   return (
@@ -23,7 +24,9 @@ function App() {
               <Route path='/' element={<Landingpage />}/>
               <Route path='/signup' element={<SignUp />}/>
               <Route path='/signin' element={<Signin />}/>
-              <Route path='/dashboard' element={<CardContent />}/>
+              <Route path='/dashboard1' element={<CardContent />}/>
+              <Route path='/dashboard' element={<Dashboard />}/>
+              <Route path='*' element={<Landingpage />}/>
             </Routes>
           </BrowserRouter>
         </ThemeProvider>

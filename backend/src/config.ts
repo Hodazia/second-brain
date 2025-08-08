@@ -1,1 +1,1 @@
-export const JWT_TOKEN = "heythisiszia";
+export const JWT_TOKEN = process.env.JWT_SECRET as string;

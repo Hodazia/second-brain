@@ -19,6 +19,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const zod_1 = require("zod");
 const config_1 = require("../config");
 // define auth routes like login and signup,
+/* {username,password} */
 const Signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // first check what the user is sending via POSTMAN testing,
     console.log("accepting requests ", req.body);

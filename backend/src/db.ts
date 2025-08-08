@@ -3,11 +3,16 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-try {
-mongoose.connect(process.env.MONGO_DBURL as string);
-} catch (e) {
-    console.error("Failed to connect to MongoDB:", e);
+export const connectDb =  async () => 
+{
+    try {
+    const result = await mongoose.connect(process.env.MONGO_DBURL as string);
+    console.log("The DB is connected ");
+    } catch (e) {
+        console.error("Failed to connect to MongoDB:", e);
+    }
 }
+
 
 const UserSchema = new Schema({
     username: { type: String, unique: true },

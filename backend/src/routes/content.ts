@@ -9,7 +9,7 @@ export const PostContent = async ( req:Request, res:Response): Promise<void> => 
     console.log("tags are ", req.body.tags);
     console.log("type is  ", req.body.type);
     //@ts-ignore
-    console.log("who has send the user id ", req.userid);
+    console.log("who has send the user id ", req.userId); // it is userId
 
 
     try {

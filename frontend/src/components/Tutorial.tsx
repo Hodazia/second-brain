@@ -15,6 +15,8 @@ import { Input } from "../components/ui/input"
 import { Label } from "../components/ui/label"
 import { Link } from "lucide-react";
 import { ContentPreview } from "./ContentPreview";
+import { Brain } from "lucide-react";
+
 
 interface Content {
   _id: string,
@@ -147,5 +149,16 @@ export const DialogDemo = () => {
         </DialogContent>
       </form>
     </Dialog>
+  )
+}
+
+
+import { GithubIcon, LinkedinIcon, TwitterIcon } from "lucide-react";
+
+export const Footer = () => {
+  return (
+        <>
+
+        </>
   )
 }

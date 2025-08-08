@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
 const auth_1 = require("./routes/auth");
+const db_1 = require("./db");
 const cors_1 = __importDefault(require("cors"));
 const middleware_1 = require("./middleware");
 const content_1 = require("./routes/content");
@@ -26,4 +27,5 @@ app.post("/api/v1/brain/share", middleware_1.UserMiddleware, brain_1.ShareBrain)
 app.post("/api/v1/brain/share/:shareId", middleware_1.UserMiddleware, brain_1.ShareBrainByShareId);
 app.listen(3000, () => {
     console.log("we are listening to 3000");
+    (0, db_1.connectDb)();
 });

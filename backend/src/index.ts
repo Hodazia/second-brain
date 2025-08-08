@@ -2,7 +2,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import { Signup, Signin } from './routes/auth';
-import { UserModel, ContentModel, LinkModel } from './db';
+import { UserModel, ContentModel, LinkModel, connectDb } from './db';
 import cors from "cors";
 import { UserMiddleware } from './middleware';
 import { DeleteContent, GetContent, PostContent } from './routes/content';
@@ -28,4 +28,5 @@ app.post("/api/v1/brain/share/:shareId", UserMiddleware, ShareBrainByShareId);
 
 app.listen(3000, () => {
     console.log("we are listening to 3000");
+    connectDb();
 })

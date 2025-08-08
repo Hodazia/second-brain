@@ -6,6 +6,7 @@ import {z} from "zod";
 import { JWT_TOKEN } from "../config";
 
 // define auth routes like login and signup,
+/* {username,password} */
 export const Signup = async (req:Request, res:Response): Promise<void> => {
     // first check what the user is sending via POSTMAN testing,
 
