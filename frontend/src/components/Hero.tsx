@@ -2,88 +2,158 @@
 import { Brain, ArrowRight, Play } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { useNavigate } from "react-router-dom";
-// hero section for tha landing page
+import { motion } from "framer-motion";
+
 export const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated background elements */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-white to-orange-50">
+      {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl animate-pulse dark:from-purple-600/20 dark:to-pink-600/20"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-cyan-400/20 rounded-full blur-3xl animate-pulse delay-1000 dark:from-blue-600/20 dark:to-cyan-600/20"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-indigo-400/10 to-purple-400/10 rounded-full blur-3xl animate-pulse delay-500 dark:from-indigo-600/10 dark:to-purple-600/10"></div>
+        {/* Top center orange glow */}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-gradient-to-br from-orange-400/30 to-orange-600/20 rounded-full blur-3xl"></div>
+        {/* Subtle gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-orange-50/50"></div>
       </div>
 
       <div className="relative z-10 container mx-auto px-6 text-center">
-        <div className="flex justify-center mb-8">
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full blur-xl opacity-75 animate-pulse"></div>
-            <div className="relative bg-gradient-to-r from-purple-600 to-blue-600 p-4 rounded-full">
-              <Brain className="w-12 h-12 text-white" />
+        {/* Main content */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-4xl mx-auto"
+        >
+          {/* Logo and title */}
+          <motion.div 
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <div className="flex justify-center mb-8">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full blur-xl opacity-75 animate-pulse"></div>
+                <div className="relative bg-gradient-to-r from-orange-500 to-orange-600 p-4 rounded-full">
+                  <Brain className="w-12 h-12 text-white" />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+            
+            {/* Headline */}
+            <motion.h1 
+              className="text-5xl md:text-7xl font-bold mb-6 leading-tight text-gray-900"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              Your Digital Mind,
+              <br />
+              <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
+                Organized.
+              </span>
+            </motion.h1>
 
-        {/*have added a custom color foreground */}
-        <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-foreground via-purple-600
-         to-foreground bg-clip-text text-transparent mb-6 animate-fade-in">
-          Externalize Your Genius.
-          <br />
-          <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-            Share Your Brain.
-          </span>
-        </h1>
+            {/* Sub-headline with underline */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="mb-8"
+            >
+              <p className="text-xl md:text-2xl font-semibold italic text-gray-700 mb-2">
+                Just Two Clicks Away
+              </p>
+              <div className="w-24 h-1 bg-orange-500 mx-auto rounded-full"></div>
+            </motion.div>
 
-        <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto 
-        leading-relaxed animate-fade-in-delay">
-          Transform scattered thoughts into an organized digital brain. Capture ideas, connect knowledge, and share your unique perspective with the world.
-        </p>
+            {/* Description */}
+            <motion.p 
+              className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            >
+              Create, organize, and access all your important links, documents, and ideas in one clean space. 
+              Expand and define your knowledge with a digital brain that truly understands your unique workflow.
+            </motion.p>
+          </motion.div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-          <Button 
-            size="lg" 
-            className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white 
-            px-8 py-4 text-lg font-semibold rounded-full shadow-2xl 
-            hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 hover:translate-x-2"
-            onClick={() => navigate('/signup')}
+          {/* Main CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1 }}
+            className="mb-16"
           >
-            Get Started Free
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
-          
-          <Button 
-            variant="outline" 
-            size="lg"
-            className="border-2 border-border hover:border-purple-300 
-            px-8 py-4 text-lg font-semibold rounded-full transition-all 
-            duration-300 hover:bg-accent hover:translate-x-2"
-          >
-            <Play className="mr-2 w-5 h-5" />
-            Watch Demo
-          </Button>
-        </div>
+            <Button 
+              size="lg" 
+              className="bg-orange-500 hover:bg-orange-600 text-white 
+              px-12 py-6 text-xl font-semibold rounded-lg shadow-lg 
+              hover:shadow-orange-500/25 transition-all duration-300 transform hover:scale-105"
+              onClick={() => navigate('/signup')}
+            >
+              Start Building Your secondBrain
+              <ArrowRight className="ml-3 w-6 h-6" />
+            </Button>
+          </motion.div>
 
-        {/* Stats or social proof */}
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-8 text-muted-foreground">
-          {/*there shall be two divs, in row style above sm, and columns style when sm */}
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-sm font-medium">Join 10,000+ knowledge creators</span>
-          </div>
-          <div className="hidden sm:block w-px h-4 bg-border"></div>
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-medium">⭐⭐⭐⭐⭐ Rated 4.8/5</span>
-          </div>
-        </div>
+          {/* Visual Element - Dashboard Preview */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 1.2 }}
+            className="relative max-w-4xl mx-auto"
+          >
+            <div className="relative bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-8 shadow-2xl">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Sample cards */}
+                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
+                      <span className="text-white text-sm font-bold">YT</span>
+                    </div>
+                    <span className="font-medium text-sm text-gray-700">YouTube Video</span>
+                  </div>
+                  <p className="text-xs text-gray-600">How to build a second brain...</p>
+                </div>
+                
+                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                      <span className="text-white text-sm font-bold">N</span>
+                    </div>
+                    <span className="font-medium text-sm text-gray-700">Notion Page</span>
+                  </div>
+                  <p className="text-xs text-gray-600">Project planning notes...</p>
+                </div>
+                
+                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                      <span className="text-white text-sm font-bold">D</span>
+                    </div>
+                    <span className="font-medium text-sm text-gray-700">Document</span>
+                  </div>
+                  <p className="text-xs text-gray-600">Research findings...</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-muted-foreground rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-muted-foreground rounded-full mt-2 animate-pulse"></div>
+      <motion.div 
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse"></div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

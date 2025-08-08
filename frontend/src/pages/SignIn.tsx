@@ -1,193 +1,178 @@
-// this shall be for signin.tsx
-
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useRef, useState } from "react";
 import { Button } from "../components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../components/ui/form";
-import { Input } from "../components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import axios from "axios";
+import { useNavigate } from "react-router";
+import { motion } from "framer-motion";
+import { Brain, ArrowLeft, Eye, EyeOff, User, Lock } from "lucide-react";
+// import { ThemeToggle } from "../components/ThemeToggle";
 import { toast } from "sonner";
-import axios from 'axios';
-import { Eye, EyeOff, Brain } from "lucide-react";
-import { ThemeToggle } from "../components/ThemeToggle";
 
-// define a formschema, what is it , why we need it
-const formSchema = z.object({
-  username: z.string().min(3, "Username must be at least 3 characters long"),
-  password: z.string().min(8, "Password must be at least 8 characters long"),
-});
-
-
-type FormData = z.infer<typeof formSchema>;
-
-
-const Signin = () => {
-  const navigate = useNavigate();
-  // create a state for once we have signed in, it shall load the button, by defult
-  // it should be false
-  const [isLoading, setIsLoading] = useState(false);
-  // set a state to hide, toggle the showing of password
+const LoginPage: React.FC = () => {
+  const [loading, setloading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
-  // why we need this , 
-  const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-    },
-  });
-
-  const onSubmit = async (data: FormData) => {
-    setIsLoading(true);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const username = usernameRef.current?.value;
+    const password = passwordRef.current?.value;
+  
+    setloading(true);
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/signin`, data);
-
-      if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        toast.success('Welcome back! Redirecting to dashboard...');
-        setTimeout(() => {
-          navigate('/dashboard');
-        }, 1500);
-      }
-    } catch (error) {
-      console.error('Signin error:', error);
-      const errorMessage = axios.isAxiosError(error)
-        ? error.response?.data?.message || 'Failed to sign in'
-        : 'Failed to sign in. Please try again.';
-      toast.error(errorMessage, {
-        description: 'Please check your username and password'
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/signin`, {
+        username,
+        password,
       });
+  
+      toast.success(res.data.message || "Login successful!");
+  
+      const jwt = res.data.token;
+      localStorage.setItem("token", jwt);
+  
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1500);
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { message?: string } } };
+      const errorMessage = error.response?.data?.message || "Login failed. Please try again.";
+      toast.error(errorMessage);
     } finally {
-      setIsLoading(false);
+      setloading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--hero-gradient-from))] via-[hsl(var(--hero-gradient-via))] to-[hsl(var(--hero-gradient-to))]">
-      <ThemeToggle />
+    <div className="min-h-screen bg-gradient-to-b from-white to-orange-50">
+      {/* <ThemeToggle /> */}
       
-      {/* Animated background elements */}
+      {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl animate-pulse dark:from-purple-600/20 dark:to-pink-600/20"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-cyan-400/20 rounded-full blur-3xl animate-pulse delay-1000 dark:from-blue-600/20 dark:to-cyan-600/20"></div>
+        {/* Top center orange glow */}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-gradient-to-br from-orange-400/30 to-orange-600/20 rounded-full blur-3xl"></div>
+        {/* Subtle gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-orange-50/50"></div>
       </div>
 
       <div className="relative z-10 flex items-center justify-center min-h-screen px-6 py-12">
         <div className="w-full max-w-md">
+          {/* Back to home */}
+          <motion.div 
+            className="text-center mb-6"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <button
+              onClick={() => navigate('/')}
+              className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Home
+            </button>
+          </motion.div>
+
           {/* Logo and title */}
-          <div className="text-center mb-8">
+          <motion.div 
+            className="text-center mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             <div className="flex justify-center mb-6">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full blur-xl opacity-75 animate-pulse"></div>
-                <div className="relative bg-gradient-to-r from-purple-600 to-blue-600 p-3 rounded-full">
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full blur-xl opacity-75 animate-pulse"></div>
+                <div className="relative bg-gradient-to-r from-orange-500 to-orange-600 p-3 rounded-full">
                   <Brain className="w-8 h-8 text-white" />
                 </div>
               </div>
             </div>
-            <h1 className="text-3xl font-bold text-foreground mb-2">Welcome Back</h1>
-            <p className="text-muted-foreground">Sign in to access your brain vault</p>
-          </div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
+            <p className="text-gray-600">Sign in to your secondBrain account</p>
+          </motion.div>
 
-          {/* Signin form */}
-          <div className="bg-card/60 backdrop-blur-sm border border-border rounded-2xl p-8 shadow-2xl">
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-foreground">Username</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Enter your username"
-                          className="bg-background/50 border-border"
-                          disabled={isLoading}
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+          {/* Login form */}
+          <motion.div 
+            className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-8 shadow-lg"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Username/Email field */}
+              <div className="space-y-2">
+                <label htmlFor="username" className="text-sm font-medium text-gray-900">
+                  Username or Email
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="text"
+                    id="username"
+                    ref={usernameRef}
+                    className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                    placeholder="Enter your username or email"
+                    required
+                    disabled={loading}
+                  />
+                </div>
+              </div>
 
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-foreground">Password</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <Input
-                            type={showPassword ? "text" : "password"}
-                            placeholder="Enter your password"
-                            className="bg-background/50 border-border pr-10"
-                            disabled={isLoading}
-                            {...field}
-                          />
-                          <button
-                            type="button"
-                            className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                            tabIndex={-1}
-                            onClick={() => setShowPassword(!showPassword)}
-                          >
-                            {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                          </button>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              {/* Password field */}
+              <div className="space-y-2">
+                <label htmlFor="password" className="text-sm font-medium text-gray-900">
+                  Password
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    ref={passwordRef}
+                    className="w-full pl-10 pr-12 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                    placeholder="Enter your password"
+                    required
+                    disabled={loading}
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                    onClick={() => setShowPassword(!showPassword)}
+                    disabled={loading}
+                  >
+                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+              </div>
 
-                <Button 
-                  type="submit" 
-                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white py-3 text-lg font-semibold rounded-full shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Signing In...' : 'Sign In'}
-                </Button>
-              </form>
-            </Form>
+              {/* Submit button */}
+              <Button 
+                type="submit"
+                disabled={loading} 
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 text-lg font-semibold rounded-lg shadow-lg hover:shadow-orange-500/25 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              >
+                {loading ? "Signing In..." : "Sign In"}
+              </Button>
+            </form>
 
+            {/* Sign up link */}
             <div className="mt-6 text-center">
-              <p className="text-muted-foreground">
-                Don't have an account?{' '}
+              <p className="text-gray-600">
+                Don't have an account?{" "}
                 <button
                   onClick={() => navigate('/signup')}
-                  className="text-purple-600 hover:text-purple-700 font-medium underline"
+                  className="text-orange-600 hover:text-orange-700 font-medium underline"
                 >
-                  Create Account
+                  Sign Up
                 </button>
               </p>
             </div>
-          </div>
-
-          {/* Back to home */}
-          <div className="text-center mt-6">
-            <button
-              onClick={() => navigate('/')}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              ← Back to Home
-            </button>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Signin;
+export default LoginPage;
