@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteContent = exports.GetContent = exports.PostContent = void 0;
+exports.Filtercontents = exports.PutTagsData = exports.GetTagData = exports.DeleteContent = exports.GetContent = exports.PostContent = void 0;
 const db_1 = require("../db");
+const db_2 = require("../db");
 const PostContent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // check what we are getting from the post request;
     console.log("title is", req.body.title);
@@ -19,12 +20,18 @@ const PostContent = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     console.log("tags are ", req.body.tags);
     console.log("type is  ", req.body.type);
     //@ts-ignore
-    console.log("who has send the user id ", req.userid);
+    console.log("who has send the user id ", req.userId); // it is userId
     try {
         // Ensure tags is an array of strings
-        const tags = Array.isArray(req.body.tags)
-            ? req.body.tags.map((tag) => String(tag).trim()).filter((tag) => tag.length > 0)
-            : [];
+        // const tags = Array.isArray(req.body.tags)
+        //     ? req.body.tags.map((tag: unknown) => String(tag).trim()).filter((tag: string) => tag.length > 0)
+        //     : [];
+        // Validate tags is an array
+        const tags = req.body.tags;
+        if (!Array.isArray(tags) || tags.some(tag => typeof tag !== 'string')) {
+            return;
+            res.status(400).json({ message: "Tags must be an array of strings." });
+        }
         // Create content with validated tags
         const newContent = yield db_1.ContentModel.create({
             content: req.body.content,
@@ -100,3 +107,72 @@ const DeleteContent = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.DeleteContent = DeleteContent;
+const GetTagData = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const tags = yield db_2.TagsModel.find({});
+        return res.status(200).json({ tags });
+    }
+    catch (error) {
+        return res.status(500).json({ message: "An internal error occurred", error: error.message });
+    }
+});
+exports.GetTagData = GetTagData;
+const PutTagsData = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // Array of tags to be given, { tags: [] }
+    const { tags } = req.body;
+    if (!tags || !Array.isArray(tags) || tags.length === 0) {
+        return res.status(400).json({ message: "Missing or invalid required field: tags." });
+    }
+    try {
+        // Insert new tags if they don't exist
+        const insertedTags = yield Promise.all(tags.map((tagName) => __awaiter(void 0, void 0, void 0, function* () {
+            const existingTag = yield db_2.TagsModel.findOne({ name: tagName });
+            if (!existingTag) {
+                return new db_2.TagsModel({ name: tagName }).save();
+            }
+            return existingTag;
+        })));
+        return res.status(201).json({ message: "Tags created/updated successfully.", tags: insertedTags });
+    }
+    catch (error) {
+        return res.status(500).json({ message: "An internal error occurred", error: error.message });
+    }
+});
+exports.PutTagsData = PutTagsData;
+const Filtercontents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // :content => [Youtube, ]
+    const filter = req.params.content;
+    //@ts-ignore
+    const userId = req.userId;
+    // Use a mapping object for search values
+    const filterMap = {
+        'Videos': 'Youtube',
+        'Tweets': 'Twitter',
+        'Documents': 'Document',
+        'Website': 'Links',
+        'Links': ['Links', 'Website'],
+    };
+    const type = filter === "All" ? '' : filterMap[filter];
+    if (!userId) {
+        return res.status(401).json({ message: "User not authenticated." });
+    }
+    try {
+        let query;
+        if (type) {
+            // If linkType is an array (e.g., "Links" case), use $in
+            query = Array.isArray(type)
+                ? { type: { $in: type }, userId }
+                : { type, userId };
+        }
+        else {
+            // Handle "All" case
+            query = { userId };
+        }
+        const content = yield db_1.ContentModel.find(query);
+        res.status(200).json({ message: "Content loaded successfully.", content });
+    }
+    catch (error) {
+        res.status(500).json({ message: "An internal server error occurred." });
+    }
+});
+exports.Filtercontents = Filtercontents;

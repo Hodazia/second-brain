@@ -5,7 +5,7 @@ import { Signup, Signin } from './routes/auth';
 import { UserModel, ContentModel, LinkModel, connectDb } from './db';
 import cors from "cors";
 import { UserMiddleware } from './middleware';
-import { DeleteContent, GetContent, PostContent } from './routes/content';
+import { DeleteContent, Filtercontents, GetContent, GetTagData, PostContent, PutTagsData } from './routes/content';
 import { ShareBrain, ShareBrainByShareId } from './routes/brain';
 
 const app =express();
@@ -24,7 +24,9 @@ app.get("/api/v1/content", UserMiddleware, GetContent);
 app.delete("/api/v1/content", UserMiddleware, DeleteContent);
 app.post("/api/v1/brain/share", UserMiddleware, ShareBrain);
 app.post("/api/v1/brain/share/:shareId", UserMiddleware, ShareBrainByShareId);
-
+app.get('/api/v1/tags',UserMiddleware, GetTagData);
+app.put('/api/v1/tags',UserMiddleware,PutTagsData);
+app.get('/api/v1/contents/:content',UserMiddleware,Filtercontents);
 
 app.listen(3000, () => {
     console.log("we are listening to 3000");

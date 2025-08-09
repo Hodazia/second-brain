@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Button } from "./ui/button";
+import { Button } from "./ui/button"
 import { useNavigate } from "react-router-dom";
 import { Play } from "lucide-react";
 
@@ -74,15 +74,14 @@ export const VideoShowcase = () => {
             transition={{ duration: 0.8, delay: 0.6 }}
             viewport={{ once: true }}
           >
-            <Button 
-              size="lg"
+            <button 
               className="bg-orange-500 hover:bg-orange-600 text-white 
               px-8 py-4 text-lg font-semibold rounded-lg shadow-lg 
               hover:shadow-orange-500/25 transition-all duration-300 transform hover:scale-105"
               onClick={() => navigate('/signup')}
             >
               Try secondBrain for Free
-            </Button>
+            </button>
           </motion.div>
         </motion.div>
       </div>

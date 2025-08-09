@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Button } from "../components/ui/button";
+
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
@@ -147,13 +147,13 @@ const LoginPage: React.FC = () => {
               </div>
 
               {/* Submit button */}
-              <Button 
+              <button 
                 type="submit"
                 disabled={loading} 
                 className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 text-lg font-semibold rounded-lg shadow-lg hover:shadow-orange-500/25 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
               >
                 {loading ? "Signing In..." : "Sign In"}
-              </Button>
+              </button>
             </form>
 
             {/* Sign up link */}

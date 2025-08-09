@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ContentModel } from "../db";
+import { TagsModel } from "../db";
 
 export const PostContent = async ( req:Request, res:Response): Promise<void> => {
     // check what we are getting from the post request;
@@ -14,10 +15,16 @@ export const PostContent = async ( req:Request, res:Response): Promise<void> => 
 
     try {
     // Ensure tags is an array of strings
-    const tags = Array.isArray(req.body.tags)
-        ? req.body.tags.map((tag: unknown) => String(tag).trim()).filter((tag: string) => tag.length > 0)
-        : [];
+    // const tags = Array.isArray(req.body.tags)
+    //     ? req.body.tags.map((tag: unknown) => String(tag).trim()).filter((tag: string) => tag.length > 0)
+    //     : [];
 
+      // Validate tags is an array
+      const tags = req.body.tags
+  if (!Array.isArray(tags) || tags.some(tag => typeof tag !== 'string')) {
+    return 
+    res.status(400).json({ message: "Tags must be an array of strings." });
+  }
     // Create content with validated tags
     const newContent = await ContentModel.create({
         content: req.body.content,
@@ -101,3 +108,84 @@ export const DeleteContent = async (req: Request, res: Response): Promise<void> 
         });
     }
 }
+
+export const GetTagData =  async (req: Request, res: Response) => {
+    try {
+      const tags = await TagsModel.find({});
+      return res.status(200).json({tags});
+    } catch (error: any) {
+      return res.status(500).json({ message: "An internal error occurred", error: error.message });
+    }
+  };
+  
+export const PutTagsData =  async (req: Request, res: Response) => {
+
+    // Array of tags to be given, { tags: [] }
+    const { tags }  = req.body;
+    
+    if (!tags || !Array.isArray(tags) || tags.length === 0) {
+      return res.status(400).json({ message: "Missing or invalid required field: tags." });
+    }
+  
+  
+    try {
+      // Insert new tags if they don't exist
+      const insertedTags = await Promise.all(
+        tags.map(async (tagName) => {
+          const existingTag = await TagsModel.findOne({ name: tagName });
+  
+          if (!existingTag) {
+            return new TagsModel({ name: tagName }).save();
+          }
+          return existingTag;
+        })
+      );
+  
+      return res.status(201).json({ message: "Tags created/updated successfully.", tags: insertedTags });
+    } catch (error: any) {
+      return res.status(500).json({ message: "An internal error occurred", error: error.message });
+    }
+  };
+
+  export const Filtercontents = async (req:Request,res:Response) => {
+    // :content => [Youtube, ]
+    const filter = req.params.content;
+    //@ts-ignore
+    const userId = req.userId;
+
+  // Use a mapping object for search values
+  const filterMap: Record<string, string | string[]> = {
+      'Videos': 'Youtube',
+      'Tweets': 'Twitter',
+      'Documents': 'Document',
+      'Website': 'Links',
+      'Links': ['Links', 'Website'], 
+  };
+
+  const type = filter === "All" ? '' : filterMap[filter];
+
+  if (!userId) {
+      return res.status(401).json({ message: "User not authenticated." });
+  }
+
+  try {
+      let query: Record<string, unknown>;
+
+      if (type) {
+          // If linkType is an array (e.g., "Links" case), use $in
+          query = Array.isArray(type)
+              ? { type: { $in: type }, userId }
+              : { type, userId };
+      } else {
+          // Handle "All" case
+          query = { userId };
+      }
+
+      const content = await ContentModel.find(query);
+
+      res.status(200).json({ message: "Content loaded successfully.", content });
+  } catch (error) {
+      res.status(500).json({ message: "An internal server error occurred." });
+  }
+
+  }

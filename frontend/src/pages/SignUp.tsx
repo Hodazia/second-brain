@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
-import { Button } from "../components/DashboardComponents/Button";
+
 import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import { Brain, ArrowLeft, Eye, EyeOff, User, Lock, Mail } from "lucide-react";
 // import { ThemeToggle } from "../components/ThemeToggle";
 import { toast } from "sonner";
+import  { Button } from "../components/ui/button";
 
 const SignupPage: React.FC = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const SignupPage: React.FC = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const usernameRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
+
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
 
@@ -22,7 +23,7 @@ const SignupPage: React.FC = () => {
     e.preventDefault();
 
     const username = usernameRef.current?.value;
-    const email = emailRef.current?.value;
+    // const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
     const confirmPassword = confirmPasswordRef.current?.value;
 
@@ -35,7 +36,6 @@ const SignupPage: React.FC = () => {
     try {
       const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/signup`, {
         username,
-        email,
         password,
       });
 
@@ -128,24 +128,7 @@ const SignupPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Email field */}
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium text-gray-900">
-                  Email
-                </label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <input
-                    type="email"
-                    id="email"
-                    ref={emailRef}
-                    className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
-                    placeholder="Enter your email"
-                    required
-                    disabled={loading}
-                  />
-                </div>
-              </div>
+             
 
               {/* Password field */}
               <div className="space-y-2">
@@ -202,13 +185,13 @@ const SignupPage: React.FC = () => {
               </div>
 
               {/* Submit button */}
-              <Button 
+              <button 
                 type="submit"
                 disabled={loading} 
                 className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 text-lg font-semibold rounded-lg shadow-lg hover:shadow-orange-500/25 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
               >
                 {loading ? "Creating Account..." : "Create Account"}
-              </Button>
+              </button>
             </form>
 
             {/* Sign in link */}

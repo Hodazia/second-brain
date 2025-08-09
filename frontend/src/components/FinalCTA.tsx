@@ -73,8 +73,8 @@ export const FinalCTA = () => {
               transition={{ duration: 0.8, delay: 0.8 }}
               viewport={{ once: true }}
             >
-              <Button 
-                size="lg"
+              <button 
+               
                 className="bg-orange-500 hover:bg-orange-600 text-white 
                 px-12 py-6 text-xl font-semibold rounded-lg shadow-lg 
                 hover:shadow-orange-500/25 transition-all duration-300 transform hover:scale-105"
@@ -82,7 +82,7 @@ export const FinalCTA = () => {
               >
                 Get Started Now - It's Free
                 <ArrowRight className="ml-3 w-6 h-6" />
-              </Button>
+              </button>
             </motion.div>
 
             {/* Additional info */}

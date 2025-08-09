@@ -63,12 +63,12 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.4 }}
             >
-              <Button 
+              <button 
                 onClick={() => navigate('/signup')}
                 className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
               >
                 Sign Up
-              </Button>
+              </button>
             </motion.div>
           </div>
 
@@ -76,7 +76,8 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-gray-700 hover:text-orange-600 transition-colors"
+              className="p-2 text-gray-700 hover:text-orange-600 
+              transition-colors"
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -91,14 +92,17 @@ const Navbar = () => {
             height: isMenuOpen ? 'auto' : 0
           }}
           transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden bg-white border-t border-gray-200"
+          className="md:hidden overflow-hidden bg-white border-t 
+          border-gray-200"
         >
           <div className="py-4 space-y-4">
             {navItems.map((item, index) => (
               <motion.button
                 key={item.name}
                 onClick={item.action}
-                className="block w-full text-left px-4 py-2 text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors duration-200"
+                className="block w-full text-left px-4 py-2 text-gray-700
+                 hover:text-orange-600 hover:bg-orange-50 rounded-lg 
+                 transition-colors duration-200"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -113,12 +117,13 @@ const Navbar = () => {
               transition={{ duration: 0.3, delay: 0.4 }}
               className="px-4"
             >
-              <Button 
+              <button 
                 onClick={() => navigate('/signup')}
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-lg font-medium"
+                className="w-full bg-orange-500 hover:bg-orange-600
+                 text-white py-2 rounded-lg font-medium"
               >
                 Sign Up
-              </Button>
+              </button>
             </motion.div>
           </div>
         </motion.div>

@@ -4,7 +4,7 @@ import Cards from "./Cards";
 import axios from "../../utils/token";
 import { useEffect, useState } from "react";
 import { BACKEND_URL, FRONTEND_URL } from "../../utils/config";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 
 interface FuncProps {
   onClickopen: () => void;
@@ -17,7 +17,7 @@ interface Card {
   _id: string;
   title: string;
   content: string;
-  linkType: string;
+  type: string;
   link: string;
   tags: string[];
 }
@@ -26,51 +26,101 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
   const [cardData, setCardData] = useState<Card[]>([]);
   const [loading, setLoading] = useState(false);
   const [deleted, setDeleted] = useState(false);
+  const navigate = useNavigate();
   
   const {filter} = useParams();
+  
+  // Check if user is authenticated
+  const checkAuth = () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/signin');
+      return false;
+    }
+    return true;
+  };
   
   // Fetch cards only when shared is false
   useEffect(() => {
     if (shared) return;
     
+    if (!checkAuth()) return;
+    
     async function getCards() {
       setLoading(true);
       try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          navigate('/signin');
+          return;
+        }
+
         if (filter) {
-          const res = await axios.get<{ content: Card[] }>(`${BACKEND_URL}/api/v1/contents/${filter}`);
+          const res = await axios.get<{ content: Card[] }>(`${BACKEND_URL}/api/v1/content/${filter}`);
           setCardData(res.data.content || []); // Set fetched data
         } else {
-          const res = await axios.get<{ contents: Card[] }>(`${BACKEND_URL}/api/v1/contents`);
+          const res = await axios.get<{ contents: Card[] }>(`${BACKEND_URL}/api/v1/content`);
           setCardData(res.data.contents || []); // Set fetched data
         }
-      } catch (error: unknown) {
+      } catch (error: any) {
         console.error("Failed to fetch cards:", error);
-        alert("Failed to fetch cards. Please try again.");
+        
+        if (error.response?.status === 401) {
+          // Unauthorized - token is invalid
+          localStorage.removeItem('token');
+          navigate('/signin');
+          alert("Session expired. Please sign in again.");
+        } else {
+          alert("Failed to fetch cards. Please try again.");
+        }
       } finally {
         setLoading(false);
       }
     }
   
     getCards();
-  }, [cardRender, deleted, shared, filter]); // Added shared to dependencies
+  }, [cardRender, deleted, shared, filter, navigate]); // Added navigate to dependencies
   
 
   async function deleteCard(id: string) {
+    if (!checkAuth()) return;
+    
     try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        navigate('/signin');
+        return;
+      }
+
       const res = await axios.delete<{ message: string }>(`${BACKEND_URL}/api/v1/content`, {
         data: { contentId: id },
       });
       setDeleted((prev) => !prev);
       alert(res.data.message);
-    } catch (error: unknown) {
+    } catch (error: any) {
       console.error("Failed to delete card:", error);
-      alert("Failed to delete the card. Please try again.");
+      
+      if (error.response?.status === 401) {
+        localStorage.removeItem('token');
+        navigate('/signin');
+        alert("Session expired. Please sign in again.");
+      } else {
+        alert("Failed to delete the card. Please try again.");
+      }
     }
   }
   
 
   async function copy() {
+    if (!checkAuth()) return;
+    
     try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        navigate('/signin');
+        return;
+      }
+
       const res = await axios.post<{ hash?: string }>(`${BACKEND_URL}/api/v1/brain/share`, {
         share: true,
       });
@@ -81,9 +131,16 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
       } else {
         alert("No hash data found.");
       }
-    } catch (error: unknown) {
+    } catch (error: any) {
       console.error("Failed to copy:", error);
-      alert("Failed to copy. Please try again.");
+      
+      if (error.response?.status === 401) {
+        localStorage.removeItem('token');
+        navigate('/signin');
+        alert("Session expired. Please sign in again.");
+      } else {
+        alert("Failed to copy. Please try again.");
+      }
     }
   }
   
@@ -119,7 +176,8 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
            <div>Loading...</div>
         </div>
         ) :(
-          shared && data? (<Cards deleteCard={deleteCard} shared={shared} data={data} />):(<Cards deleteCard={deleteCard} data={cardData} />)
+          shared && data? (<Cards deleteCard={deleteCard} shared={shared} 
+            data={data} />):(<Cards deleteCard={deleteCard} data={cardData} />)
         )}
       </div>
 

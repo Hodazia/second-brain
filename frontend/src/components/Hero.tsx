@@ -1,6 +1,6 @@
 
 import { Brain, ArrowRight, Play } from "lucide-react";
-import { Button } from "../components/ui/button";
+import { Button } from "./ui/button";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -87,16 +87,16 @@ export const Hero = () => {
             transition={{ duration: 0.8, delay: 1 }}
             className="mb-16"
           >
-            <Button 
-              size="lg" 
+            <button 
               className="bg-orange-500 hover:bg-orange-600 text-white 
               px-12 py-6 text-xl font-semibold rounded-lg shadow-lg 
-              hover:shadow-orange-500/25 transition-all duration-300 transform hover:scale-105"
+              hover:shadow-orange-500/25 
+              transition-all duration-300 transform hover:scale-105"
               onClick={() => navigate('/signup')}
             >
               Start Building Your secondBrain
               <ArrowRight className="ml-3 w-6 h-6" />
-            </Button>
+            </button>
           </motion.div>
 
           {/* Visual Element - Dashboard Preview */}
