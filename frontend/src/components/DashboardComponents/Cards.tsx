@@ -1,3 +1,4 @@
+import { RiNotionFill } from "react-icons/ri";
 import Card from "./Card";
 import { FileText, Link, Youtube, Twitter, Monitor } from "lucide-react";
 
@@ -25,6 +26,7 @@ const Cards = ({data,deleteCard,shared}:Dataarray) => {
       { name: "Document", logo: <FileText /> },
       { name: "Links", logo: <Link /> },
       { name: "Website", logo: <Link /> },
+      {name:"Notion",logo:<RiNotionFill />},
       { name: "Other", logo: <Monitor /> },
     ];
     

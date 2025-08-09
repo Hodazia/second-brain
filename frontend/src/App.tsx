@@ -22,7 +22,7 @@ function App() {
           <Route path='/dashboard' element={<DashBoard />}/>
           <Route path="/dashboard/:filter" element={<DashBoard/>}/>
           <Route path="/share/:hash" element={<Shared />}/>
-          <Route path='*' element={<Landingpage />}/>
+          <Route path='/*' element={<Landingpage />}/>
         </Routes>
       </BrowserRouter>
     </>

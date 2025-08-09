@@ -148,7 +148,8 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
 
   
   return (
-    <div id="Background" className="w-full min-h-screen py-12 md:px-10 md:py-12 ">
+    <div id="Background" className="w-full min-h-screen py-12 md:px-10
+     md:py-12 bg-gradient-to-b from-white to-orange-50  ">
       <div id="nav" className="w-full flex justify-between px-1">
         <div id="text" className="font-bold text-2xl md:text-4xl">
           All Notes
@@ -157,7 +158,8 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
           <div className="flex gap-3 w-[19vw]">
             <Button
               text="Share Idea"
-              variant="bg-purple-300 hover:bg-purple-400 text-purple-500 hidden justify-center items-center "
+              variant="bg-orange-600 hover:bg-white hover:text-orange-600
+              text-white hidden justify-center items-center p-2 "
               sidebar={false}
               icon={<Share2 />}
               onClick={copy}
@@ -165,7 +167,8 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
             <Button
               onClick={onClickopen}
               text="Add Content"
-              variant="bg-purple-700 hover:bg-purple-600 justify-center items-center"
+              variant="bg-orange-600 hover:bg-white hover:text-orange-600
+              text-white justify-center items-center"
               icon={<Plus />}
             />
           </div>

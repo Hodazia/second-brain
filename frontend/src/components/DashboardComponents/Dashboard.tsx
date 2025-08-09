@@ -22,6 +22,7 @@ interface Card {
 const DashBoard: React.FC<FuncProps> = ({ data, shared }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isCardUpdated, setCardUpdated] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // State for sidebar
   const token = localStorage.getItem('token');
 
   const handleModalClose = () => {
@@ -42,9 +43,13 @@ const DashBoard: React.FC<FuncProps> = ({ data, shared }) => {
 
   return (
     // Changed background to a light shade and text to a dark shade
-    <div className="bg-gray-50 min-h-screen font-janeLight text-gray-800 flex overflow-hidden transition-all duration-500">
+    <div className="bg-gray-50 min-h-screen font-janeLight text-gray-800 
+    flex overflow-hidden transition-all duration-500">
       <CreateContent shared={shared} open={isModalOpen} onClose={handleModalClose} />
-      <SidebarControl shared={shared}/>
+      <SidebarControl shared={shared} open={isSidebarOpen} setOpen={setIsSidebarOpen}/>
+      <div 
+        className={`flex-1 transition-all duration-100 ease-in-out ${isSidebarOpen ? 'ml-[20vw]' : 'ml-20'}`}
+      >
       <Background
         cardRender={isCardUpdated}
         shared={shared}
@@ -52,6 +57,7 @@ const DashBoard: React.FC<FuncProps> = ({ data, shared }) => {
         data={data}
         onClickopen={handleModalOpen}
       />
+      </div>
     </div>
   );
 };

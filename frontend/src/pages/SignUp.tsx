@@ -58,10 +58,11 @@ const SignupPage: React.FC = () => {
       
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Top center orange glow */}
+        
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-gradient-to-br from-orange-400/30 to-orange-600/20 rounded-full blur-3xl"></div>
-        {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-orange-50/50"></div>
+        
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent
+         via-transparent to-orange-50/50"></div>
       </div>
 
       <div className="relative z-10 flex items-center justify-center min-h-screen px-6 py-12">
@@ -91,14 +92,17 @@ const SignupPage: React.FC = () => {
           >
             <div className="flex justify-center mb-6">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full blur-xl opacity-75 animate-pulse"></div>
-                <div className="relative bg-gradient-to-r from-orange-500 to-orange-600 p-3 rounded-full">
+                <div className="absolute inset-0 bg-gradient-to-r 
+                from-orange-500 to-orange-600 rounded-full blur-xl
+                opacity-75 animate-pulse"></div>
+                <div className="relative bg-gradient-to-r 
+                from-orange-500 to-orange-600 p-3 rounded-full">
                   <Brain className="w-8 h-8 text-white" />
                 </div>
               </div>
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Join secondBrain</h1>
-            <p className="text-gray-600">Create your digital brain and start organizing your knowledge</p>
+            <h1 className="text-3xl font-bold text-gray-700 mb-2">Join CardVault</h1>
+            <p className="text-gray-700">Create your digital brain and start organizing your knowledge</p>
           </motion.div>
 
           {/* Signup form */}

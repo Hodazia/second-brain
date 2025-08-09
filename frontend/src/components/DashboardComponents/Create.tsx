@@ -15,6 +15,7 @@ const types = [
   { value: "Website", label: "Website" },
   { value: "Document", label: "Document" },
   { value: "Links", label: "Links" },
+  {value:"Notion", label:"Notion"},
   { value: "Other", label: "Other" },
 ];
 
@@ -107,13 +108,17 @@ function CreateContent({ open, onClose,shared }: AddContentProps) {
   return (
     <>
       {open && (
-        <div className="w-screen h-screen bg-gray-900 fixed top-0 left-0 bg-opacity-60">
+        <div className="w-screen h-screen 
+        fixed top-0 left-0 bg-opacity-60">
           <div className="flex items-center justify-center w-full h-full">
             {/* Changed modal background to white */}
-            <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md relative transition-colors duration-200">
+            <div className="bg-white shadow-lg rounded-xl p-8 
+            w-full max-w-md relative transition-colors duration-200">
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                className="absolute top-4 right-4 
+                text-gray-400 hover:text-gray-600 
+                transition-colors duration-200"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

@@ -1,7 +1,8 @@
 const NotFound404 = () => {
   return (
     // Changed to light background and a clean card style
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen 
+    bg-gradient-to-b from-white to-orange-50">
       <div className="text-center p-6 bg-white shadow-lg rounded-lg outline outline-1 outline-gray-200">
         <h1 className="text-2xl font-semibold text-red-500">404 - Page Not Found</h1>
         <p className="mt-4 text-gray-700">

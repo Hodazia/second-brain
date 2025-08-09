@@ -89,7 +89,7 @@ const LoginPage: React.FC = () => {
               </div>
             </div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-            <p className="text-gray-600">Sign in to your secondBrain account</p>
+            <p className="text-gray-600">Sign in to your CardVault account</p>
           </motion.div>
 
           {/* Login form */}

@@ -152,9 +152,10 @@ const Filtercontents = (req, res) => __awaiter(void 0, void 0, void 0, function*
         'tweets': 'Twitter',
         'documents': 'Document',
         'website': 'Links',
+        'notion': 'Notion', //added notion as a type too
         'links': ['Links', 'Website'],
     };
-    const type = filter === "All" ? '' : filterMap[filter];
+    const type = filter === "all" ? '' : filterMap[filter];
     if (!userId) {
         return res.status(401).json({ message: "User not authenticated." });
     }

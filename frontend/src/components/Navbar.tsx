@@ -37,6 +37,7 @@ const Navbar = () => {
   ];
 
   return (
+    <>
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 
       ${isScrolled
@@ -60,7 +61,8 @@ const Navbar = () => {
                 <Brain className="w-6 h-6 text-white" />
               </div>
             </div>
-            <span className="text-xl font-bold text-black drop-shadow-lg">DocuView</span>
+            <span className="text-xl font-bold text-gray-600 drop-shadow-lg">
+            CardVault</span>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -69,7 +71,9 @@ const Navbar = () => {
               <motion.button
                 key={item.name}
                 onClick={item.action}
-                className="text-black hover:text-orange-300 font-medium transition-colors duration-200"
+                className="text-gray-600 hover:text-orange-500
+                hover:bg-gray-100 p-2
+                 font-medium transition-colors duration-200"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -97,14 +101,50 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-white hover:text-orange-300 transition-colors"
+              className="p-2 text-gray-600 hover:text-orange-300 
+              transition-colors"
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMenuOpen ? <X className="w-6 h-6" /> : 
+              <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
       </div>
     </nav>
+
+          {/* Mobile Menu */}
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="fixed top-16 md:hidden w-full bg-white/90 backdrop-blur-lg shadow-md z-40 p-4"
+            >
+              <div className="flex flex-col gap-4">
+                {navItems.map((item) => (
+                  <motion.button
+                    key={item.name}
+                    onClick={item.action}
+                    className="text-gray-800 text-lg font-medium p-2 text-left hover:bg-gray-100 transition-colors"
+                    whileHover={{ x: 5 }}
+                  >
+                    {item.name}
+                  </motion.button>
+                ))}
+                <motion.button
+                  onClick={() => {
+                    navigate('/signup');
+                    setIsMenuOpen(false);
+                  }}
+                  className="mt-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105"
+                >
+                  Sign Up
+                </motion.button>
+              </div>
+            </motion.div>
+          )}
+          </>
   );
 };
 

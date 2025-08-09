@@ -3,13 +3,18 @@ import { Brain, Youtube, Twitter, FileText, Link, Filter, LogOut, Sidebar as Sid
 import { Button } from "./Button";
 import { useNavigate } from "react-router";
 import Logout from './Logout';
+// ADD A REACT-ICONS LIBRARY TO GET NOTION ICON
+import { RiNotionFill } from "react-icons/ri";
 
 interface prop{
   shared?:boolean;
+  open: boolean;
+  setOpen: (isOpen: boolean) => void;
 }
 
-function SidebarControl({shared}:prop){
-  const [open, setOpen] = useState(true);
+
+function SidebarControl({ shared, open, setOpen }:prop){
+  // const [open, setOpen] = useState(true);
   const [width, setWidth] = useState(window.innerWidth);
   const navigate = useNavigate();
   const [logoutpop,setLogoutpop] = useState(false);
@@ -19,13 +24,14 @@ function SidebarControl({shared}:prop){
     window.addEventListener("resize", handleResize);
     setOpen(width > 1380); // Adjust breakpoint
     return () => window.removeEventListener("resize", handleResize);
-  }, [width]);
+  }, [width,setOpen]);
 
   const data = [
     { name: "All", logo: <Filter /> },
     { name: "Tweets", logo: <Twitter /> },
     { name: "Videos", logo: <Youtube /> },
     { name: "Documents", logo: <FileText /> },
+    {name:"Notion",logo:<RiNotionFill />},
     { name: "Links", logo: <Link /> },
   ];
 
@@ -33,8 +39,10 @@ function SidebarControl({shared}:prop){
     // Changed sidebar background to white and added a subtle shadow
     <div
       id="sidebar"
-      className={`bg-white shadow-xl min-h-screen py-8 transition-all 
-        duration-100 ease-in-out ${
+      className={`bg-gradient-to-b from-white to-orange-50 shadow-xl min-h-screen py-8 transition-all 
+        duration-100 ease-in-out fixed top-0 left-0 
+        border-r border-1px
+        ${
         open ? "w-[20vw]" : "w-20"
       }`}
     >
@@ -44,14 +52,17 @@ function SidebarControl({shared}:prop){
             <div onClick={()=>navigate('/dashboard')} className="flex
              items-center text-2xl md:text-3xl gap-2 font-bold">
                {/* Changed logo color to match the landing page */}
-              <Brain className="text-orange-500 text-3xl md:text-4xl" />
-              <div>Second Brain</div>
+               <div className="bg-orange-500 rounded-full">
+               <Brain className="p-2 text-white text-4xl md:text-4xl h-12 w-12" />
+               </div>
+              
+              <div className="">DocuView</div>
             </div>
           )}
-          {/* Changed icon color to a dark gray */}
+          
           <SidebarIcon
-            onClick={() => setOpen((prev) => !prev)}
-            className="cursor-pointer text-gray-600 hover:text-gray-900"
+            onClick={() => setOpen(!open)}
+            className="cursor-pointer text-orange-600 hover:text-orange-900"
           />
         </div>
       </div>
@@ -62,7 +73,7 @@ function SidebarControl({shared}:prop){
               onClick={()=>navigate(`/dashboard/${item.name.toLowerCase()}`)} // Corrected to use lowercase URLs
               key={index}
               sidebar={true}
-              variant="h-14 px-10"
+              variant="h-14 px-10 text-orange-600"
               text={open ? item.name : ""}
               icon={item.logo}
               />
@@ -72,7 +83,7 @@ function SidebarControl({shared}:prop){
          setLogoutpop(true)
         }}  text={open ? "Logout" : ""} icon={<LogOut />}
          // Adjusted logout button style for light theme
-         variant="px-10 gap-5 my-3 text-xl hover:bg-gray-200 h-10 text-gray-700"/>}
+         variant="px-10 gap-5 my-3 text-xl hover:bg-gray-200 h-10 text-orange-600"/>}
         <Logout isOpen={logoutpop} onClose={()=>{
           setLogoutpop(false)
         }} onConfirm={()=>{
