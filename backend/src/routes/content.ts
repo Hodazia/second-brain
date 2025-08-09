@@ -149,17 +149,19 @@ export const PutTagsData =  async (req: Request, res: Response) => {
 
   export const Filtercontents = async (req:Request,res:Response) => {
     // :content => [Youtube, ]
-    const filter = req.params.content;
+    const filterParam = req.params.content;
     //@ts-ignore
     const userId = req.userId;
 
+    // Convert the filter parameter to lowercase for consistent matching
+  const filter = filterParam.toLowerCase();
   // Use a mapping object for search values
   const filterMap: Record<string, string | string[]> = {
-      'Videos': 'Youtube',
-      'Tweets': 'Twitter',
-      'Documents': 'Document',
-      'Website': 'Links',
-      'Links': ['Links', 'Website'], 
+      'videos': 'Youtube',
+      'tweets': 'Twitter',
+      'documents': 'Document',
+      'website': 'Links',
+      'links': ['Links', 'Website'], 
   };
 
   const type = filter === "All" ? '' : filterMap[filter];
@@ -168,6 +170,11 @@ export const PutTagsData =  async (req: Request, res: Response) => {
       return res.status(401).json({ message: "User not authenticated." });
   }
 
+    // Check if the filter is valid before proceeding
+    if (filter !== 'all' && !type) {
+        return res.status(400).json(
+            { message: "Invalid content filter provided." });
+      }
   try {
       let query: Record<string, unknown>;
 

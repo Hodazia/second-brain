@@ -9,11 +9,12 @@ export const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-white to-orange-50">
-      {/* Background elements */}
+      
       <div className="absolute inset-0 overflow-hidden">
-        {/* Top center orange glow */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-gradient-to-br from-orange-400/30 to-orange-600/20 rounded-full blur-3xl"></div>
-        {/* Subtle gradient overlay */}
+        
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 
+        w-96 h-96 bg-gradient-to-br from-orange-400/30 to-orange-600/20 rounded-full blur-3xl"></div>
+        
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-orange-50/50"></div>
       </div>
 
@@ -55,7 +56,7 @@ export const Hero = () => {
               </span>
             </motion.h1>
 
-            {/* Sub-headline with underline */}
+            {/* Sub-headlines with underline */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -94,8 +95,10 @@ export const Hero = () => {
               transition-all duration-300 transform hover:scale-105"
               onClick={() => navigate('/signup')}
             >
-              Start Building Your secondBrain
-              <ArrowRight className="ml-3 w-6 h-6" />
+              Start Building Your secondBrain <span>
+              <ArrowRight className="mx-auto w-6 h-6" />
+              </span>
+              
             </button>
           </motion.div>
 

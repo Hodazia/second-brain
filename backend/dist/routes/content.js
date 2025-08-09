@@ -141,20 +141,26 @@ const PutTagsData = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.PutTagsData = PutTagsData;
 const Filtercontents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // :content => [Youtube, ]
-    const filter = req.params.content;
+    const filterParam = req.params.content;
     //@ts-ignore
     const userId = req.userId;
+    // Convert the filter parameter to lowercase for consistent matching
+    const filter = filterParam.toLowerCase();
     // Use a mapping object for search values
     const filterMap = {
-        'Videos': 'Youtube',
-        'Tweets': 'Twitter',
-        'Documents': 'Document',
-        'Website': 'Links',
-        'Links': ['Links', 'Website'],
+        'videos': 'Youtube',
+        'tweets': 'Twitter',
+        'documents': 'Document',
+        'website': 'Links',
+        'links': ['Links', 'Website'],
     };
     const type = filter === "All" ? '' : filterMap[filter];
     if (!userId) {
         return res.status(401).json({ message: "User not authenticated." });
+    }
+    // Check if the filter is valid before proceeding
+    if (filter !== 'all' && !type) {
+        return res.status(400).json({ message: "Invalid content filter provided." });
     }
     try {
         let query;

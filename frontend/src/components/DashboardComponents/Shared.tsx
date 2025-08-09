@@ -10,7 +10,7 @@ const Shared = () => {
     const [data,setData] = useState([])
     useEffect(()=>{
         async function getData() {
-            const res = await axios.get(`${BACKEND_URL}/api/v1/brain/${hash}`)
+            const res = await axios.get(`${BACKEND_URL}/api/v1/brain/share/${hash}`)
             setData(res.data.content)
         }
         getData()

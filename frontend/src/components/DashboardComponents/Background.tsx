@@ -55,8 +55,9 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
           return;
         }
 
+        // get the cards data from the backend API, choose filtered one so, 
         if (filter) {
-          const res = await axios.get<{ content: Card[] }>(`${BACKEND_URL}/api/v1/content/${filter}`);
+          const res = await axios.get<{ content: Card[] }>(`${BACKEND_URL}/api/v1/contents/${filter}`);
           setCardData(res.data.content || []); // Set fetched data
         } else {
           const res = await axios.get<{ contents: Card[] }>(`${BACKEND_URL}/api/v1/content`);

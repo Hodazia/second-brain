@@ -1,12 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Brain, Menu, X } from 'lucide-react';
-import { Button } from './ui/button';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Change state if user scrolls beyond hero height (adjust as needed)
+      if (window.scrollY > 80) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -23,9 +37,16 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 
+      ${isScrolled
+        ? 'max-w-5xl mx-auto mt-4 rounded-2xl bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg'
+        : 'w-full bg-white/10 backdrop-blur-lg border-b border-white/20'
+      }`}
+    >
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
+          
           {/* Logo */}
           <motion.div 
             className="flex items-center gap-3 cursor-pointer"
@@ -39,7 +60,7 @@ const Navbar = () => {
                 <Brain className="w-6 h-6 text-white" />
               </div>
             </div>
-            <span className="text-xl font-bold text-gray-900">secondBrain</span>
+            <span className="text-xl font-bold text-black drop-shadow-lg">DocuView</span>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -48,7 +69,7 @@ const Navbar = () => {
               <motion.button
                 key={item.name}
                 onClick={item.action}
-                className="text-gray-700 hover:text-orange-600 font-medium transition-colors duration-200"
+                className="text-black hover:text-orange-300 font-medium transition-colors duration-200"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -76,60 +97,15 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-gray-700 hover:text-orange-600 
-              transition-colors"
+              className="p-2 text-white hover:text-orange-300 transition-colors"
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
-
-        {/* Mobile Menu */}
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ 
-            opacity: isMenuOpen ? 1 : 0,
-            height: isMenuOpen ? 'auto' : 0
-          }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden bg-white border-t 
-          border-gray-200"
-        >
-          <div className="py-4 space-y-4">
-            {navItems.map((item, index) => (
-              <motion.button
-                key={item.name}
-                onClick={item.action}
-                className="block w-full text-left px-4 py-2 text-gray-700
-                 hover:text-orange-600 hover:bg-orange-50 rounded-lg 
-                 transition-colors duration-200"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-              >
-                {item.name}
-              </motion.button>
-            ))}
-            
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 0.4 }}
-              className="px-4"
-            >
-              <button 
-                onClick={() => navigate('/signup')}
-                className="w-full bg-orange-500 hover:bg-orange-600
-                 text-white py-2 rounded-lg font-medium"
-              >
-                Sign Up
-              </button>
-            </motion.div>
-          </div>
-        </motion.div>
       </div>
     </nav>
   );
 };
 
-export default Navbar; 
+export default Navbar;

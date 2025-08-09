@@ -23,7 +23,7 @@ export const ShareBrain = async (req:Request,res:Response): Promise <void> => {
             if (existingLink) {
                 res.json({
                     message: "Shareable link already exist",
-                    Link: existingLink.hash
+                    hash: existingLink.hash
                 });
     
                 return;
@@ -63,6 +63,7 @@ export const ShareBrain = async (req:Request,res:Response): Promise <void> => {
 }
 
 export const ShareBrainByShareId = async (req: Request, res: Response): Promise<void> => {
+    //shareId is passed as the parameter
     const hash = req.params.shareId;
 
     try {

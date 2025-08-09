@@ -10,7 +10,7 @@ const Landingpage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-orange-50">
       <Navbar />
-      <div className="pt-16 "> {/* Add padding to account for fixed navbar */}
+      <div className="pt-16 "> 
         <Hero />
         <div id="demo">
           <VideoShowcase />

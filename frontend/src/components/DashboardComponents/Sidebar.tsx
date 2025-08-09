@@ -30,9 +30,10 @@ function SidebarControl({shared}:prop){
   ];
 
   return (
+    // Changed sidebar background to white and added a subtle shadow
     <div
       id="sidebar"
-      className={`bg-zinc-800 min-h-screen py-8 transition-all 
+      className={`bg-white shadow-xl min-h-screen py-8 transition-all 
         duration-100 ease-in-out ${
         open ? "w-[20vw]" : "w-20"
       }`}
@@ -42,13 +43,15 @@ function SidebarControl({shared}:prop){
           {open && (
             <div onClick={()=>navigate('/dashboard')} className="flex
              items-center text-2xl md:text-3xl gap-2 font-bold">
-              <Brain className="text-blue-300 text-3xl md:text-4xl" />
-              <div>IdeaForge</div>
+               {/* Changed logo color to match the landing page */}
+              <Brain className="text-orange-500 text-3xl md:text-4xl" />
+              <div>Second Brain</div>
             </div>
           )}
+          {/* Changed icon color to a dark gray */}
           <SidebarIcon
             onClick={() => setOpen((prev) => !prev)}
-            className="cursor-pointer text-xl hover:text-gray-300"
+            className="cursor-pointer text-gray-600 hover:text-gray-900"
           />
         </div>
       </div>
@@ -56,7 +59,7 @@ function SidebarControl({shared}:prop){
         <div className="mb-20">
           {data.map((item, index) => (
             <Button
-              onClick={()=>navigate(`/dashboard/${item.name}`)}
+              onClick={()=>navigate(`/dashboard/${item.name.toLowerCase()}`)} // Corrected to use lowercase URLs
               key={index}
               sidebar={true}
               variant="h-14 px-10"
@@ -68,7 +71,8 @@ function SidebarControl({shared}:prop){
         {!shared && <Button onClick={()=>{
          setLogoutpop(true)
         }}  text={open ? "Logout" : ""} icon={<LogOut />}
-         variant="px-10 gap-5 my-3 text-xl hover:bg-zinc-500 h-10"/>}
+         // Adjusted logout button style for light theme
+         variant="px-10 gap-5 my-3 text-xl hover:bg-gray-200 h-10 text-gray-700"/>}
         <Logout isOpen={logoutpop} onClose={()=>{
           setLogoutpop(false)
         }} onConfirm={()=>{

@@ -8,7 +8,8 @@ interface AddContentProps {
   shared?:boolean;
 }
 
-const linkTypes = [
+// define the type of links
+const types = [
   { value: "Twitter", label: "Twitter" },
   { value: "Youtube", label: "Youtube" },
   { value: "Website", label: "Website" },
@@ -106,12 +107,13 @@ function CreateContent({ open, onClose,shared }: AddContentProps) {
   return (
     <>
       {open && (
-        <div className="w-screen h-screen bg-zinc-900 fixed top-0 left-0 bg-opacity-60">
+        <div className="w-screen h-screen bg-gray-900 fixed top-0 left-0 bg-opacity-60">
           <div className="flex items-center justify-center w-full h-full">
-            <div className="bg-white dark:bg-zinc-800 shadow-lg dark:shadow-2xl rounded-xl p-8 w-full max-w-md relative transition-colors duration-200">
+            {/* Changed modal background to white */}
+            <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md relative transition-colors duration-200">
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300 transition-colors duration-200"
+                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors duration-200"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -128,45 +130,45 @@ function CreateContent({ open, onClose,shared }: AddContentProps) {
                   />
                 </svg>
               </button>
-              <h2 className="text-3xl font-bold mb-6 text-zinc-800 dark:text-zinc-100">
+              <h2 className="text-3xl font-bold mb-6 text-gray-800">
                 Add New Item
               </h2>
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
                     Title
                   </label>
                   <input
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full px-4 py-2 rounded-md bg-zinc-100 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-colors duration-200"
+                    className="w-full px-4 py-2 rounded-md bg-gray-100 text-gray-900 border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors duration-200"
                     placeholder="Enter title"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-                    Content <span className="text-zinc-400">(optional)</span>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Content <span className="text-gray-400">(optional)</span>
                   </label>
                   <textarea
                     value={content}
                     onChange={(e) => setcontent(e.target.value)}
                     rows={2}
-                    className="w-full px-4 py-2 rounded-md bg-zinc-100 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-colors duration-200"
+                    className="w-full px-4 py-2 rounded-md bg-gray-100 text-gray-900 border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors duration-200"
                     placeholder="Enter the Content"
                   ></textarea>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
                   Type
                   </label>
                   <select
                     value={type}
                     onChange={(e) => settype(e.target.value)}
-                    className="w-full px-4 py-2 rounded-md bg-zinc-100 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-colors duration-200"
+                    className="w-full px-4 py-2 rounded-md bg-gray-100 text-gray-900 border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors duration-200"
                   >
                     <option value="">Select type</option>
-                    {linkTypes.map((type) => (
+                    {types.map((type) => (
                       <option key={type.value} value={type.value}>
                         {type.label}
                       </option>
@@ -174,20 +176,20 @@ function CreateContent({ open, onClose,shared }: AddContentProps) {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-                    Link <span className="text-zinc-400">(optional)</span>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Link <span className="text-gray-400">(optional)</span>
                   </label>
                   <input
                     type="text"
                     value={link}
                     onChange={(e) => setLink(e.target.value)}
-                    className="w-full px-4 py-2 rounded-md bg-zinc-100 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-colors duration-200"
+                    className="w-full px-4 py-2 rounded-md bg-gray-100 text-gray-900 border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors duration-200"
                     placeholder="Enter link"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-                    Tags <span className="text-zinc-400">(optional)</span>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Tags <span className="text-gray-400">(optional)</span>
                   </label>
                   <div className="flex flex-wrap gap-2">
                     {tags.map((tag) => (
@@ -197,9 +199,9 @@ function CreateContent({ open, onClose,shared }: AddContentProps) {
                         onClick={() => handleTagSelection(tag.name)}
                         className={`px-3 py-1 rounded-full border ${
                           selectedTags.includes(tag.name)
-                            ? "bg-blue-600 text-white border-blue-600"
-                            : "bg-zinc-100 text-zinc-700 border-zinc-300 dark:bg-zinc-700 dark:text-zinc-300 dark:border-zinc-600"
-                        }  hover:text-white hover:border-blue-500 transition-colors`}
+                            ? "bg-orange-500 text-white border-orange-500" // Updated selected tag color
+                            : "bg-gray-100 text-gray-700 border-gray-300"
+                        }  hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-colors`}
                       >
                         {tag.name}
                       </button>
@@ -208,7 +210,7 @@ function CreateContent({ open, onClose,shared }: AddContentProps) {
 
                   <button
                     onClick={() => setShowNewTagInput(true)}
-                    className="text-blue-600 dark:text-blue-400 mt-2"
+                    className="text-orange-600 mt-2" // Updated button color
                   >
                     Add new tag
                   </button>
@@ -219,12 +221,12 @@ function CreateContent({ open, onClose,shared }: AddContentProps) {
                       type="text"
                       value={newTag}
                       onChange={(e) => setNewTag(e.target.value)}
-                      className="flex-grow px-4 py-2 rounded-md bg-zinc-100 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-colors duration-200"
+                      className="flex-grow px-4 py-2 rounded-md bg-gray-100 text-gray-900 border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors duration-200"
                       placeholder="Enter new tag"
                     />
                     <button
                       onClick={handleAddNewTag}
-                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-md"
+                      className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-md transition-colors" // Updated button color
                     >
                       Add
                     </button>
@@ -233,7 +235,7 @@ function CreateContent({ open, onClose,shared }: AddContentProps) {
                 <button
                   onClick={addContent}
                   disabled={isLoading}
-                  className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-md"
+                  className="w-full px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-md transition-colors" // Updated button color
                 >
                   {isLoading ? "Submitting..." : "Submit"}
                 </button>

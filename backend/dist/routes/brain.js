@@ -29,7 +29,7 @@ const ShareBrain = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             if (existingLink) {
                 res.json({
                     message: "Shareable link already exist",
-                    Link: existingLink.hash
+                    hash: existingLink.hash
                 });
                 return;
             }
@@ -64,6 +64,7 @@ const ShareBrain = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.ShareBrain = ShareBrain;
 const ShareBrainByShareId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //shareId is passed as the parameter
     const hash = req.params.shareId;
     try {
         const link = yield db_1.LinkModel.findOne({

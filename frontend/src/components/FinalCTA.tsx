@@ -81,7 +81,7 @@ export const FinalCTA = () => {
                 onClick={() => navigate('/signup')}
               >
                 Get Started Now - It's Free
-                <ArrowRight className="ml-3 w-6 h-6" />
+                <ArrowRight className="mx-auto w-6 h-6" />
               </button>
             </motion.div>
 

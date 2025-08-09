@@ -9,37 +9,38 @@ interface FAQItem {
 
 const faqData: FAQItem[] = [
   {
-    question: "What's secondBrain for?",
-    answer: "secondBrain is a digital knowledge management tool that helps you organize, save, and access all your important links, documents, videos, and ideas in one clean, searchable space."
+    question: "What's DocuView for?",
+    answer: `DocuView is a digital knowledge management tool 
+    that helps you organize, save, and access all your important
+     links, documents, videos, and ideas in one clean, searchable space.`
   },
   {
-    question: "What differentiates secondBrain from other note-taking tools?",
-    answer: "Unlike traditional note-taking apps, secondBrain focuses on content curation and organization. It automatically categorizes your content by type (YouTube, websites, documents, tweets) and provides powerful search and tagging capabilities."
+    question: "What differentiates DocuView from other note-taking tools?",
+    answer: `Unlike traditional note-taking apps, 
+    DocuView focuses on content curation and organization. 
+    It automatically categorizes your content by type 
+    (YouTube, websites, documents, tweets) and provides powerful search 
+    and tagging capabilities.`
   },
   {
     question: "Can I use secondBrain even if I don't have much content to organize?",
     answer: "Absolutely! secondBrain is designed to grow with you. Start with just a few items and gradually build your digital knowledge base. The more you use it, the more valuable it becomes."
   },
   {
-    question: "Is secondBrain only for specific content types?",
-    answer: "No, secondBrain supports all types of digital content including YouTube videos, websites, documents, tweets, and more. You can save anything that has a URL or can be described."
+    question: "Is my content private? ",
+    answer: `Yes. By default, your saved content is private and only visible to you.
+     You can choose to share specific items with others if you wish.`
   },
   {
-    question: "Is secondBrain free to use?",
-    answer: "Yes! secondBrain is completely free to use with all core features. We believe knowledge organization should be accessible to everyone."
+    question: "Is DocuView free to use?",
+    answer: "Yes! DocuView is completely free to use with all core features. We believe knowledge organization should be accessible to everyone."
   },
   {
-    question: "Does secondBrain work only with English content?",
-    answer: "No, secondBrain works with content in any language. The interface is in English, but you can save and organize content in any language."
-  },
-  {
-    question: "How is my data used and protected?",
-    answer: "Your data is private and secure. We use industry-standard encryption and never share your personal information. Your content belongs to you and is only accessible to you."
-  },
-  {
-    question: "Can I export my data from secondBrain?",
-    answer: "Yes, you can export your data at any time. We believe in data portability and want you to have full control over your information."
+    question:"Do i need to install anything",
+    answer:`No installation is required. DocuView works entirely in your web browser
+     — on desktop, tablet, or mobile.`
   }
+
 ];
 
 export const FAQ = () => {
