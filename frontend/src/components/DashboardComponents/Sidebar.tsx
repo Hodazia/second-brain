@@ -5,6 +5,12 @@ import { useNavigate } from "react-router";
 import Logout from './Logout';
 // ADD A REACT-ICONS LIBRARY TO GET NOTION ICON
 import { RiNotionFill } from "react-icons/ri";
+import { FaSpotify } from "react-icons/fa";
+import { SiGooglemaps } from "react-icons/si";
+import { SiGoogledocs } from "react-icons/si";
+import { FaLinkedin } from "react-icons/fa";
+import { FaFigma } from "react-icons/fa";
+import { SiCanva } from "react-icons/si";
 
 interface prop{
   shared?:boolean;
@@ -32,14 +38,22 @@ function SidebarControl({ shared, open, setOpen }:prop){
     { name: "Videos", logo: <Youtube /> },
     { name: "Documents", logo: <FileText /> },
     {name:"Notion",logo:<RiNotionFill />},
+    {name:"Spotify",logo:<FaSpotify />},
+    {name:"Google Docs",logo:<SiGoogledocs />},
+    {name:"Google Maps",logo:<SiGooglemaps/>},
+    {name:"Linkedin", logo:<FaLinkedin />},
+    {name:"Figma", logo:<FaFigma />},
+    {name:"Canva",logo:<SiCanva />},
     { name: "Links", logo: <Link /> },
+
   ];
 
   return (
     // Changed sidebar background to white and added a subtle shadow
     <div
       id="sidebar"
-      className={`bg-gradient-to-b from-white to-orange-50 shadow-xl min-h-screen py-8 transition-all 
+      className={`bg-gradient-to-b from-white to-orange-50
+         shadow-xl h-screen overflow-y-auto py-8 transition-all 
         duration-100 ease-in-out fixed top-0 left-0 
         border-r border-1px
         ${

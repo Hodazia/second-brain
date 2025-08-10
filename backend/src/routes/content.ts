@@ -162,6 +162,12 @@ export const PutTagsData =  async (req: Request, res: Response) => {
       'documents': 'Document',
       'website': 'Links',
       'notion':'Notion', //added notion as a type too
+      'spotify':'Spotify',
+      'google docs':'Google Docs',
+      'google maps':'Google Maps',
+      'linkedin':'Linkedin', // added medium blogs to the website
+      'figma':'Figma',
+      'canva':'Canva',
       'links': ['Links', 'Website'], 
   };
 

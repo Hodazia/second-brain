@@ -16,6 +16,12 @@ const types = [
   { value: "Document", label: "Document" },
   { value: "Links", label: "Links" },
   {value:"Notion", label:"Notion"},
+  {value:"Spotify", label:"Spotify"},
+  {value:"Google Docs", label:"Google Docs"},
+  {value:"Google Maps", label:"Google Maps"},
+  {value:"Linkedin",label:"Linkedin"},
+  {value:"Figma", label:"Figma"},
+  {value:"Canva",label:"Canva"},
   { value: "Other", label: "Other" },
 ];
 

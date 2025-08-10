@@ -75,13 +75,61 @@ const Card = ({ Src, type, title, tags, Date, content, icon, id, del, shared }: 
   const embedUrl = convertToEmbedUrl(Src);
   // add a embedded form for Notion Doc too, which is shared publicly,
 
+  // add a spotify embed option too to embed ur perfect spotify songs
+  const getSpotifyEmbedUrl = (url: string) => {
+    const parts = url.split('/');
+    const typeIndex = parts.findIndex(part => ["track", "album", "playlist"].includes(part));
+    if (typeIndex > -1 && parts[typeIndex + 1]) {
+      return `https://open.spotify.com/embed/track/6p5qM4vG18sI1jLRYR56iS${parts[typeIndex]}/${parts[typeIndex + 1]}`;
+    }
+    return "";
+  };
+  
+  // add a google maps embedd url
+  const getGoogleMapsEmbedUrl = (url: string) => {
+    // Check if the URL is already in a valid embed format.
+    if (url.includes("/embed/")) {
+      return url;
+    }
+  
+    // Handle a direct place link by replacing "place" with "embed".
+    if (url.includes("/maps/place/")) {
+      return url.replace("/maps/place/", "/maps/embed/place/");
+    }
+  
+    // Fallback for a complex Google Maps share URL, which is the most common case.
+    // This extracts the encoded 'pb' parameter and formats the embed URL correctly.
+    const regex = /!1m[0-9]+!1m[0-9]+!1m3([^!]+)/;
+    const match = url.match(regex);
+    if (match && match[1]) {
+      // Construct the embed URL with the extracted parameters.
+      return `https://www.google.com/mapspb=!1m18!1m12!1m3${match[0]}!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sfr!4v1620000000000!5m2!1sen!2sfr`;
+    }
+  
+    // As a last resort, return the original URL which will likely fail.
+    return url;
+  };
+
+  // add a google docs embedd url
+  const getGoogleDocsEmbedUrl = (url: string) => {
+    const googleDocsUrl = new URL(url);
+    return `${googleDocsUrl.href}?embedded=true`;
+  };
+
+  // take the url provided by the figma and convert it into a new one to be embedded
+  const embeddFigma = (url:string) => {
+    const figmaEmbed =
+    `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(url)}`;
+
+    return figmaEmbed;
+  }
 
   return (
     // Replaced `div` with `motion.div` and added animation props
     <motion.div
       className="flex flex-col justify-between bg-white
       text-gray-800 max-w-80 max-h-[56vh] md:mx-2 my-5
-      rounded-xl shadow-lg overflow-hidden px-4"
+      rounded-2xl shadow-lg overflow-hidden px-4"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
@@ -105,7 +153,7 @@ const Card = ({ Src, type, title, tags, Date, content, icon, id, del, shared }: 
         <div className="h-12 font-bold text-2xl">{title}</div>
       </div>
 
-      <div className="object-cover overflow-hidden flex flex-col gap-2">
+      <div className="object-cover overflow-hidden m-2 flex flex-col gap-2">
         <span>{content}</span>
         {(type === "Website" || type === "Links" || type === "Document" || type === "Others") && <span>{Src}</span>}
 
@@ -140,6 +188,8 @@ const Card = ({ Src, type, title, tags, Date, content, icon, id, del, shared }: 
             allowFullScreen
             frameBorder="0"
           ></iframe>
+
+
         )}
         {/* <iframe src="https://hospitable-page-c67.notion.site/ebd/24962da32a8d80768465fb06c59fc74c" width="100%"
          height="600" frameborder="0" allowfullscreen /> */}
@@ -147,6 +197,99 @@ const Card = ({ Src, type, title, tags, Date, content, icon, id, del, shared }: 
          <iframe src="https://hospitable-page-c67.notion.site/ebd/24962da32a8d80768465fb06c59fc74c" 
          width="100%" height="600" frameborder="0" allowfullscreen />
          */}
+
+          {/*Spotify Embed iframe */}
+          {type=="Spotify" &&
+            <iframe src={Src} //getSpotifyEmbedUrl(Src)
+            className="w-full"
+            style={{ height: '400px', maxWidth: '500px' }}
+            allow="encrypted-media"
+            frameBorder="0">
+            </iframe>
+          }
+
+          {/*Embed Google maps */}
+          {/*
+          
+          "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2482.1838156294743!2d-0.17326729999999999!3d51.5281883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761abbae852bf5%3A0x34cd7f7c34919856!2sLord&#39;s%20Tour!5e0!3m2!1sen!2sin!4v1754764063470!5m2!1sen!2sin"
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2482.1838156294743!2d-0.17326729999999999!3d51.5281883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761abbae852bf5%3A0x34cd7f7c34919856!2sLord&#39;s%20Tour!5e0!3m2!1sen!2sin!4v1754764190451!5m2!1sen!2sin" 
+          width="600" height="450" style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+          
+
+          
+          */}
+          {type=="Google Maps" &&
+              <iframe
+                    src={getGoogleMapsEmbedUrl(Src)} //getGoogleMapsEmbedUrl(Src)
+                    className="w-full"
+                    style={{ height: '300px', maxWidth: '500px', border: '1px solid #ddd' }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    frameBorder="0"
+              ></iframe>
+          }
+
+          {/*Embed Google Docs */}
+            {type=="Google Docs" &&
+                <iframe
+                      src={getGoogleDocsEmbedUrl(Src)}
+                      className="w-full"
+                      style={{ height: '300px', maxWidth: '500px', border: '1px solid #ddd' }}
+                      allowFullScreen
+                      frameBorder="0"
+                  ></iframe>
+          }
+
+          {/*Medium Blogs */}
+          {/* {type=="Medium Blogs" && 
+                    <iframe
+                    src={Src}
+                    className="w-full"
+                    style={{ height: '300px', maxWidth: '500px', border: '1px solid #ddd' }}
+                    allowFullScreen
+                    frameBorder="0"
+                  ></iframe>} */}
+
+            {/*Linkedin embedded */}
+            {type=="Linkedin" && 
+            <iframe 
+            src={Src}
+              className="w-full"
+              style={{ height: '300px', maxWidth: '500px', border: '1px solid #ddd' }}
+              allowFullScreen
+              frameBorder="0"
+            >
+              </iframe>}
+
+              {/*Figma embeddded in the form too
+              first convert it into embedURL, 
+              */}
+              {type=="Figma" && 
+                  <iframe 
+                      src={Src}
+                      className="w-full"
+                      style={{ height: '300px', maxWidth: '500px', border: '1px solid #ddd' }}
+                      allowFullScreen
+                      frameBorder="0"
+                          >
+                     </iframe>}
+
+              {/*Canva embeddded in the form too
+              first convert it into embedURL, 
+              */}
+              {type=="Canva" && 
+                  <iframe 
+                      src={Src}
+                      className="w-full"
+                      style={{ height: '300px', maxWidth: '500px', border: '1px solid #ddd' }}
+                      allowFullScreen
+                      frameBorder="0"
+                          >
+                    </iframe>}
       </div>
 
       <div>
