@@ -96,7 +96,7 @@ function SidebarControl({ shared, open, setOpen }:prop){
               text={open ? item.name : ""}
               icon={item.logo}
               //@ts-ignore
-              Disabled={`${shared==true? "true":"false"}`}
+              //Disabled={`${shared==true? "true":"false"}`}
               />
 
             </div>
