@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Preview from "../assets/Dashboardprevi.png"
 
 export const DashboardPrev = ()  => {
