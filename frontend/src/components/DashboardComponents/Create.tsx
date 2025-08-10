@@ -101,6 +101,7 @@ function CreateContent({ open, onClose,shared }: AddContentProps) {
         tags: selectedTags,
       });
       //alert(res.data.message);  don't provide any alert messages
+      console.log("the resultant data from the add content is ", res.data.message);
       onClose();
       setTitle("");
       setcontent("");

@@ -10,7 +10,7 @@ interface BtnDashProps {
     sidebar?:boolean,
 }
 
-export const Button = ({text,type,variant,Disabled,icon,onClick,sidebar}: BtnDashProps) => {
+export const Button = ({text,variant,Disabled,icon,onClick,sidebar}: BtnDashProps) => {
     return (
         <button disabled={Disabled} onClick={onClick} 
         // Adjusted styles for the light theme

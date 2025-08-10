@@ -3,10 +3,10 @@ import axios from "axios";
 
 import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
-import { Brain, ArrowLeft, Eye, EyeOff, User, Lock, Mail } from "lucide-react";
+import { Brain, ArrowLeft, Eye, EyeOff, User, Lock} from "lucide-react";
 // import { ThemeToggle } from "../components/ThemeToggle";
 import { toast } from "sonner";
-import  { Button } from "../components/ui/button";
+
 
 const SignupPage: React.FC = () => {
   const navigate = useNavigate();

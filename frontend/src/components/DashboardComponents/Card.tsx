@@ -76,39 +76,10 @@ const Card = ({ Src, type, title, tags, Date, content, icon, id, del, shared }: 
   // add a embedded form for Notion Doc too, which is shared publicly,
 
   // add a spotify embed option too to embed ur perfect spotify songs
-  const getSpotifyEmbedUrl = (url: string) => {
-    const parts = url.split('/');
-    const typeIndex = parts.findIndex(part => ["track", "album", "playlist"].includes(part));
-    if (typeIndex > -1 && parts[typeIndex + 1]) {
-      return `https://open.spotify.com/embed/track/6p5qM4vG18sI1jLRYR56iS${parts[typeIndex]}/${parts[typeIndex + 1]}`;
-    }
-    return "";
-  };
+
   
-  // add a google maps embedd url
-  const getGoogleMapsEmbedUrl = (url: string) => {
-    // Check if the URL is already in a valid embed format.
-    if (url.includes("/embed/")) {
-      return url;
-    }
   
-    // Handle a direct place link by replacing "place" with "embed".
-    if (url.includes("/maps/place/")) {
-      return url.replace("/maps/place/", "/maps/embed/place/");
-    }
   
-    // Fallback for a complex Google Maps share URL, which is the most common case.
-    // This extracts the encoded 'pb' parameter and formats the embed URL correctly.
-    const regex = /!1m[0-9]+!1m[0-9]+!1m3([^!]+)/;
-    const match = url.match(regex);
-    if (match && match[1]) {
-      // Construct the embed URL with the extracted parameters.
-      return `https://www.google.com/mapspb=!1m18!1m12!1m3${match[0]}!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sfr!4v1620000000000!5m2!1sen!2sfr`;
-    }
-  
-    // As a last resort, return the original URL which will likely fail.
-    return url;
-  };
 
   // add a google docs embedd url
   const getGoogleDocsEmbedUrl = (url: string) => {
@@ -117,12 +88,12 @@ const Card = ({ Src, type, title, tags, Date, content, icon, id, del, shared }: 
   };
 
   // take the url provided by the figma and convert it into a new one to be embedded
-  const embeddFigma = (url:string) => {
-    const figmaEmbed =
-    `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(url)}`;
+  // const embeddFigma = (url:string) => {
+  //   const figmaEmbed =
+  //   `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(url)}`;
 
-    return figmaEmbed;
-  }
+  //   return figmaEmbed;
+  // }
 
   return (
     // Replaced `div` with `motion.div` and added animation props

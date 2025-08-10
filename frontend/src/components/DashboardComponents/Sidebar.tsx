@@ -6,7 +6,6 @@ import Logout from './Logout';
 // ADD A REACT-ICONS LIBRARY TO GET NOTION ICON
 import { RiNotionFill } from "react-icons/ri";
 import { FaSpotify } from "react-icons/fa";
-import { SiGooglemaps } from "react-icons/si";
 import { SiGoogledocs } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
 import { FaFigma } from "react-icons/fa";
