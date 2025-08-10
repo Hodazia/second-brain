@@ -157,11 +157,11 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
           All Notes
         </div>
         {!shared && (
-          <div className="flex gap-3 w-[19vw]">
+          <div className="flex gap-3  w-[19vw] flex-wrap">
             <Button
               text="Share Idea"
               variant="bg-orange-600 hover:bg-white hover:text-orange-600
-              text-white hidden justify-center items-center p-2 "
+              text-white justify-center items-center p-1 "
               sidebar={false}
               icon={<Share2 />}
               onClick={copy}
@@ -170,7 +170,7 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
               onClick={onClickopen}
               text="Add Content"
               variant="bg-orange-600 hover:bg-white hover:text-orange-600
-              text-white justify-center items-center"
+              text-white justify-center items-center p-1"
               icon={<Plus />}
             />
           </div>
@@ -189,9 +189,12 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
             shared={shared} 
               data={data} />
                ):
-          // <Cards deleteCard={deleteCard} 
-          // shared={shared} 
-          //   data={data} />):
+               cardData.length === 0 ? (
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl text-gray-500 font-bold">
+                  No cards found for this section.
+                </div>
+              )
+               :
             (<Cards 
               deleteCard={deleteCard}
                data={cardData} />)

@@ -1,5 +1,5 @@
 import React from "react";
-
+import ReactDOM from "react-dom"
 
 
 interface LogoutPopupProps {
@@ -13,7 +13,7 @@ interface LogoutPopupProps {
 const Logout: React.FC<LogoutPopupProps> = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
 
-  return (
+  const modalContent = (
     <div className="fixed inset-0 flex items-center 
     justify-center  bg-opacity-60 z-50">
       {/* Changed modal background to white */}
@@ -38,7 +38,12 @@ const Logout: React.FC<LogoutPopupProps> = ({ isOpen, onClose, onConfirm }) => {
         </div>
       </div>
     </div>
-  );
+  )
+    
+
+    // Render modal in document.body to escape sidebar
+  return ReactDOM.createPortal(modalContent, document.body);
+  
 };
 
 export default Logout;
