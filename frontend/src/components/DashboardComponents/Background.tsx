@@ -154,7 +154,7 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
      md:py-12 bg-gradient-to-b from-white to-orange-50  ">
       <div id="nav" className="w-full flex justify-between px-1">
         <div id="text" className="font-bold text-2xl md:text-4xl">
-          All Notes
+          Welcome to your Dashboard!
         </div>
         {!shared && (
           <div className="flex gap-3  w-[19vw] flex-wrap">

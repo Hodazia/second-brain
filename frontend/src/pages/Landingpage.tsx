@@ -5,6 +5,7 @@ import { FAQ } from "../components/FAQ";
 import { FinalCTA } from "../components/FinalCTA";
 // import { ThemeToggle } from "../components/ThemeToggle";
 import Navbar from "../components/Navbar";
+import { DashboardPrev } from "../components/DashboardPreview";
 
 const Landingpage = () => {
   return (
@@ -14,6 +15,9 @@ const Landingpage = () => {
         <Hero />
         <div id="demo">
           <VideoShowcase />
+        </div>
+        <div>
+          <DashboardPrev />
         </div>
         <div id="features">
           <FeatureHighlights />
