@@ -1,11 +1,15 @@
 import React from "react";
 
+
+
 interface LogoutPopupProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
 }
 
+// show a toast notification on successful logout, it shall be at the top not
+// at the bottom,
 const Logout: React.FC<LogoutPopupProps> = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
 

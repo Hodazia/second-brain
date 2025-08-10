@@ -154,8 +154,7 @@ const Filtercontents = (req, res) => __awaiter(void 0, void 0, void 0, function*
         'website': 'Links',
         'notion': 'Notion', //added notion as a type too
         'spotify': 'Spotify',
-        'google docs': 'Google Docs',
-        'google maps': 'Google Maps',
+        'google docs': 'Google Docs', // delete Google Maps for now
         'linkedin': 'Linkedin', // added medium blogs to the website
         'figma': 'Figma',
         'canva': 'Canva',

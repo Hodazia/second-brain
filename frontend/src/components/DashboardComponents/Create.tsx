@@ -1,6 +1,7 @@
 import axios from "../../utils/token";
 import { useState, useEffect } from "react";
 import { BACKEND_URL } from "../../utils/config";
+import { toast } from "sonner";
 
 interface AddContentProps {
   open: boolean;
@@ -18,7 +19,6 @@ const types = [
   {value:"Notion", label:"Notion"},
   {value:"Spotify", label:"Spotify"},
   {value:"Google Docs", label:"Google Docs"},
-  {value:"Google Maps", label:"Google Maps"},
   {value:"Linkedin",label:"Linkedin"},
   {value:"Figma", label:"Figma"},
   {value:"Canva",label:"Canva"},
@@ -50,7 +50,8 @@ function CreateContent({ open, onClose,shared }: AddContentProps) {
         const res = await axios.get(`${BACKEND_URL}/api/v1/tags`);
         setTags(res.data.tags);
       } catch (error) {
-        alert("Error fetching tags " + error)
+        //alert("Error fetching tags " + error)
+        toast.error("Error fetching tags ");
       }
     }
     fetchTags();
@@ -66,7 +67,8 @@ function CreateContent({ open, onClose,shared }: AddContentProps) {
   const handleAddNewTag = async () => {
   
     if (tags.some((tag) => tag.name.toLowerCase() === newTag.toLowerCase())) {
-      alert("Tag already exists.");
+      //alert("Tag already exists.");
+      toast.error("Tag already exists ")
       return;
     }
   
@@ -77,15 +79,15 @@ function CreateContent({ open, onClose,shared }: AddContentProps) {
       setNewTag("");
       setShowNewTagInput(false);
       setSelectedTags([])
-      alert(res.data.message);
+      toast.success(res.data.message);
     } catch (error) {
-      alert("Failed to add new tag. Please try again. " + error);
+      toast.error("Failed to add new tag. Please try again. " + error);
     }
   };
 
   const addContent = async () => {
     if (!title || !type) {
-      alert("Please fill in all fields and select at least one tag.")
+      toast.error("Please fill in all fields and select at least one tag.")
       return;
     }
 
@@ -98,14 +100,15 @@ function CreateContent({ open, onClose,shared }: AddContentProps) {
         link,
         tags: selectedTags,
       });
-      alert(res.data.message);
+      //alert(res.data.message);  don't provide any alert messages
       onClose();
       setTitle("");
       setcontent("");
       settype("");
       setLink("");
+      toast.success("Successfully added content ");
     } catch (error) {
-      alert("Error adding content: " + error);
+      toast.error("Error adding content: " + error);
     } finally {
       setIsLoading(false);
     }

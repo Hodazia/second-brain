@@ -9,22 +9,22 @@ interface FAQItem {
 
 const faqData: FAQItem[] = [
   {
-    question: "What's DocuView for?",
-    answer: `DocuView is a digital knowledge management tool 
+    question: "What's CardVault for?",
+    answer: `CardVault is a digital knowledge management tool 
     that helps you organize, save, and access all your important
      links, documents, videos, and ideas in one clean, searchable space.`
   },
   {
-    question: "What differentiates DocuView from other note-taking tools?",
+    question: "What differentiates CardVault from other note-taking tools?",
     answer: `Unlike traditional note-taking apps, 
-    DocuView focuses on content curation and organization. 
+    CardVault focuses on content curation and organization. 
     It automatically categorizes your content by type 
     (YouTube, websites, documents, tweets) and provides powerful search 
     and tagging capabilities.`
   },
   {
-    question: "Can I use secondBrain even if I don't have much content to organize?",
-    answer: "Absolutely! secondBrain is designed to grow with you. Start with just a few items and gradually build your digital knowledge base. The more you use it, the more valuable it becomes."
+    question: "Can I use CardVault even if I don't have much content to organize?",
+    answer: "Absolutely! CardVault is designed to grow with you. Start with just a few items and gradually build your digital knowledge base. The more you use it, the more valuable it becomes."
   },
   {
     question: "Is my content private? ",
@@ -32,12 +32,12 @@ const faqData: FAQItem[] = [
      You can choose to share specific items with others if you wish.`
   },
   {
-    question: "Is DocuView free to use?",
-    answer: "Yes! DocuView is completely free to use with all core features. We believe knowledge organization should be accessible to everyone."
+    question: "Is CardVault free to use?",
+    answer: "Yes! CardVault is completely free to use with all core features. We believe knowledge organization should be accessible to everyone."
   },
   {
     question:"Do i need to install anything",
-    answer:`No installation is required. DocuView works entirely in your web browser
+    answer:`No installation is required. CardVault works entirely in your web browser
      — on desktop, tablet, or mobile.`
   }
 

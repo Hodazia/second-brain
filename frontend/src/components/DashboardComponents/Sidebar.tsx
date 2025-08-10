@@ -11,6 +11,7 @@ import { SiGoogledocs } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
 import { FaFigma } from "react-icons/fa";
 import { SiCanva } from "react-icons/si";
+import { toast } from "sonner";
 
 interface prop{
   shared?:boolean;
@@ -23,6 +24,7 @@ function SidebarControl({ shared, open, setOpen }:prop){
   // const [open, setOpen] = useState(true);
   const [width, setWidth] = useState(window.innerWidth);
   const navigate = useNavigate();
+  const [currentoption,setcuroption] = useState('All');
   const [logoutpop,setLogoutpop] = useState(false);
 
   useEffect(() => {
@@ -40,7 +42,6 @@ function SidebarControl({ shared, open, setOpen }:prop){
     {name:"Notion",logo:<RiNotionFill />},
     {name:"Spotify",logo:<FaSpotify />},
     {name:"Google Docs",logo:<SiGoogledocs />},
-    {name:"Google Maps",logo:<SiGooglemaps/>},
     {name:"Linkedin", logo:<FaLinkedin />},
     {name:"Figma", logo:<FaFigma />},
     {name:"Canva",logo:<SiCanva />},
@@ -83,14 +84,23 @@ function SidebarControl({ shared, open, setOpen }:prop){
       <div className="mt-10 w-full h-full ">
         <div className="mb-20">
           {data.map((item, index) => (
+            <div className={`${currentoption==item.name ? 'bg-gray-200' : ''}`}>
             <Button
-              onClick={()=>navigate(`/dashboard/${item.name.toLowerCase()}`)} // Corrected to use lowercase URLs
+              onClick={()=>
+                {
+                  navigate(`/dashboard/${item.name.toLowerCase()}`)
+                  setcuroption(item.name)
+                }} // Corrected to use lowercase URLs
               key={index}
               sidebar={true}
               variant="h-14 px-10 text-orange-600"
               text={open ? item.name : ""}
               icon={item.logo}
+              //@ts-ignore
+              Disabled={`${shared==true? "true":"false"}`}
               />
+
+            </div>
             ))}
           </div>
         {!shared && <Button onClick={()=>{
@@ -103,6 +113,7 @@ function SidebarControl({ shared, open, setOpen }:prop){
         }} onConfirm={()=>{
           navigate('/')
           localStorage.removeItem('token')
+          toast.success("You have been logged out successfully! ")
         }}/>
       </div>
     </div>

@@ -33,7 +33,7 @@ export const FinalCTA = () => {
             >
               Ready to Build Your{" "}
               <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
-                Digital Second Brain?
+                Digital Card Vault?
               </span>
             </motion.h2>
 
@@ -44,7 +44,7 @@ export const FinalCTA = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              Join thousands of users who are organizing their digital lives, one card at a time.
+              Curate your most important links, knowledge, and ideas into a single, shareable link.
             </motion.p>
 
             {/* Social proof */}

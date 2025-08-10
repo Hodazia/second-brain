@@ -80,7 +80,7 @@ export const VideoShowcase = () => {
               hover:shadow-orange-500/25 transition-all duration-300 transform hover:scale-105"
               onClick={() => navigate('/signup')}
             >
-              Try secondBrain for Free
+              Try CardVault for Free
             </button>
           </motion.div>
         </motion.div>

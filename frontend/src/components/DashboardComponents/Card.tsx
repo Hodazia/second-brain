@@ -147,7 +147,9 @@ const Card = ({ Src, type, title, tags, Date, content, icon, id, del, shared }: 
               className="hover:text-orange-500 
               text-gray-500 cursor-pointer"
             />
-           {!shared && <Trash2 onClick={()=>del(id)} className="hover:text-orange-500 text-gray-500 cursor-pointer" />}
+           {!shared && 
+           <Trash2 onClick={()=>del(id)} 
+           className="hover:text-orange-500 text-gray-500 cursor-pointer" />}
           </div>
         </div>
         <div className="h-12 font-bold text-2xl">{title}</div>
@@ -172,7 +174,7 @@ const Card = ({ Src, type, title, tags, Date, content, icon, id, del, shared }: 
         {type=="Youtube" && (
           <iframe
             src={embedUrl}
-            className="w-full h-[100%]"
+            className="w-full h-[400px]"
             style={{ maxWidth: "500px", aspectRatio: "16/9" }}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
@@ -221,7 +223,7 @@ const Card = ({ Src, type, title, tags, Date, content, icon, id, del, shared }: 
 
           
           */}
-          {type=="Google Maps" &&
+          {/* {type=="Google Maps" &&
               <iframe
                     src={getGoogleMapsEmbedUrl(Src)} //getGoogleMapsEmbedUrl(Src)
                     className="w-full"
@@ -231,7 +233,7 @@ const Card = ({ Src, type, title, tags, Date, content, icon, id, del, shared }: 
                     referrerPolicy="no-referrer-when-downgrade"
                     frameBorder="0"
               ></iframe>
-          }
+          } */}
 
           {/*Embed Google Docs */}
             {type=="Google Docs" &&

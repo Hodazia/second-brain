@@ -5,6 +5,7 @@ import axios from "../../utils/token";
 import { useEffect, useState } from "react";
 import { BACKEND_URL, FRONTEND_URL } from "../../utils/config";
 import { useParams, useNavigate } from "react-router";
+import { toast } from "sonner";
 
 interface FuncProps {
   onClickopen: () => void;
@@ -55,9 +56,10 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
           return;
         }
 
+        const currentFilter = filter || 'all'; 
         // get the cards data from the backend API, choose filtered one so, 
         if (filter) {
-          const res = await axios.get<{ content: Card[] }>(`${BACKEND_URL}/api/v1/contents/${filter}`);
+          const res = await axios.get<{ content: Card[] }>(`${BACKEND_URL}/api/v1/contents/${currentFilter}`);
           setCardData(res.data.content || []); // Set fetched data
         } else {
           const res = await axios.get<{ contents: Card[] }>(`${BACKEND_URL}/api/v1/content`);
@@ -70,9 +72,9 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
           // Unauthorized - token is invalid
           localStorage.removeItem('token');
           navigate('/signin');
-          alert("Session expired. Please sign in again.");
+          toast.error("Session expired. Please sign in again.");
         } else {
-          alert("Failed to fetch cards. Please try again.");
+          toast.error("Failed to fetch cards. Please try again.");
         }
       } finally {
         setLoading(false);
@@ -97,16 +99,16 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
         data: { contentId: id },
       });
       setDeleted((prev) => !prev);
-      alert(res.data.message);
+      toast.success(res.data.message);
     } catch (error: any) {
       console.error("Failed to delete card:", error);
       
       if (error.response?.status === 401) {
         localStorage.removeItem('token');
         navigate('/signin');
-        alert("Session expired. Please sign in again.");
+        toast.error("Session expired. Please sign in again.");
       } else {
-        alert("Failed to delete the card. Please try again.");
+        toast.error("Failed to delete the card. Please try again.");
       }
     }
   }
@@ -128,9 +130,9 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
       
       if (res.data && res.data.hash) {
         await navigator.clipboard.writeText(`${FRONTEND_URL}/share/${res.data.hash}`);
-        alert("Copied to clipboard!");
+        toast.success("Copied to clipboard!");
       } else {
-        alert("No hash data found.");
+        toast.error("No hash data found.");
       }
     } catch (error: any) {
       console.error("Failed to copy:", error);
@@ -138,9 +140,9 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
       if (error.response?.status === 401) {
         localStorage.removeItem('token');
         navigate('/signin');
-        alert("Session expired. Please sign in again.");
+        toast.error("Session expired. Please sign in again.");
       } else {
-        alert("Failed to copy. Please try again.");
+        toast.error("Failed to copy. Please try again.");
       }
     }
   }
@@ -180,8 +182,19 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
            <div>Loading...</div>
         </div>
         ) :(
-          shared && data? (<Cards deleteCard={deleteCard} shared={shared} 
-            data={data} />):(<Cards deleteCard={deleteCard} data={cardData} />)
+          
+          shared && data? (
+          
+              <Cards deleteCard={deleteCard} 
+            shared={shared} 
+              data={data} />
+               ):
+          // <Cards deleteCard={deleteCard} 
+          // shared={shared} 
+          //   data={data} />):
+            (<Cards 
+              deleteCard={deleteCard}
+               data={cardData} />)
         )}
       </div>
 

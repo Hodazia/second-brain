@@ -95,7 +95,7 @@ export const Hero = () => {
               transition-all duration-300 transform hover:scale-105"
               onClick={() => navigate('/signup')}
             >
-              Start Building Your secondBrain <span>
+              Start Building Your CardVault <span>
               <ArrowRight className="mx-auto w-6 h-6" />
               </span>
               
