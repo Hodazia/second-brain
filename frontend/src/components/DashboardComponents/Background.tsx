@@ -6,6 +6,10 @@ import { useEffect, useState } from "react";
 import { BACKEND_URL, FRONTEND_URL } from "../../utils/config";
 import { useParams, useNavigate } from "react-router";
 import { toast } from "sonner";
+import { SearchBar } from "./SearchBar";
+// import searchbar
+
+import { useCallback } from "react";
 
 interface FuncProps {
   onClickopen: () => void;
@@ -27,6 +31,7 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
   const [cardData, setCardData] = useState<Card[]>([]);
   const [loading, setLoading] = useState(false);
   const [deleted, setDeleted] = useState(false);
+  const [searchquery,setsearchquery] = useState('');
   const navigate = useNavigate();
   
   const {filter} = useParams();
@@ -41,48 +46,55 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
     return true;
   };
   
-  // Fetch cards only when shared is false
-  useEffect(() => {
+  const fetchCards = useCallback(async () => {
     if (shared) return;
-    
     if (!checkAuth()) return;
     
-    async function getCards() {
-      setLoading(true);
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          navigate('/signin');
-          return;
-        }
-
-        const currentFilter = filter || 'all'; 
-        // get the cards data from the backend API, choose filtered one so, 
-        if (filter) {
-          const res = await axios.get<{ content: Card[] }>(`${BACKEND_URL}/api/v1/contents/${currentFilter}`);
-          setCardData(res.data.content || []); // Set fetched data
+    setLoading(true);
+    try {
+      let res;
+      if (searchquery) {
+        // Fetch data based on search query and optional filter
+        const currentFilter = filter === 'all' ? '' : filter;
+        res = await axios.get(`${BACKEND_URL}/api/v1/search`, {
+          params: { query: searchquery, type: currentFilter },
+        });
+      } else {
+        // Fetch data based on filter or all content
+        const currentFilter = filter || 'all';
+        if (currentFilter === 'all') {
+          res = await axios.get(`${BACKEND_URL}/api/v1/content`);
         } else {
-          const res = await axios.get<{ contents: Card[] }>(`${BACKEND_URL}/api/v1/content`);
-          setCardData(res.data.contents || []); // Set fetched data
+          res = await axios.get(`${BACKEND_URL}/api/v1/contents/${currentFilter}`);
         }
-      } catch (error: any) {
-        console.error("Failed to fetch cards:", error);
-        
-        if (error.response?.status === 401) {
-          // Unauthorized - token is invalid
-          localStorage.removeItem('token');
-          navigate('/signin');
-          toast.error("Session expired. Please sign in again.");
-        } else {
-          toast.error("Failed to fetch cards. Please try again.");
-        }
-      } finally {
-        setLoading(false);
       }
+
+      if (res && res.data) {
+        setCardData(res.data.data || res.data.content || []);
+        //
+        // console.log("The query is ", searchquery, "the filter is " , filter,
+        //   "the API request is ",
+        //   `${BACKEND_URL}/api/v1/search?query=${searchquery}&filter=${filter}`, 
+        //    "The cards data are ", cardData);
+      }
+    } catch (error: any) {
+      console.error("Failed to fetch cards:", error);
+      if (error.response?.status === 401) {
+        localStorage.removeItem('token');
+        navigate('/signin');
+        toast.error("Session expired. Please sign in again.");
+      } else {
+        toast.error("Failed to fetch cards. Please try again.");
+      }
+    } finally {
+      setLoading(false);
     }
-  
-    getCards();
-  }, [cardRender, deleted, shared, filter, navigate]); // Added navigate to dependencies
+  }, [searchquery, filter, shared, cardRender, deleted, navigate]);
+
+  // Fetch cards only when shared is false
+  useEffect(() => {
+    fetchCards()
+  }, [fetchCards]); // Added navigate to dependencies
   
 
   async function deleteCard(id: string) {
@@ -153,7 +165,7 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
     <div id="Background" className="w-full min-h-screen py-12 md:px-10
      md:py-12 bg-gradient-to-b from-white to-orange-50  ">
       <div id="nav" className="w-full flex justify-between px-1">
-        <div id="text" className="font-bold text-2xl md:text-4xl">
+        <div id="text" className="font-bold text-2xl text-orange-600 md:text-4xl">
           Welcome to your Dashboard!
         </div>
         {!shared && (
@@ -175,6 +187,10 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
             />
           </div>
         )}
+      </div>
+
+      <div className="my-10">
+        <SearchBar onSearch={setsearchquery} />
       </div>
       <div id="cards">
         {loading ? (
