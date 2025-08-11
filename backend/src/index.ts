@@ -7,6 +7,7 @@ import cors from "cors";
 import { UserMiddleware } from './middleware';
 import { DeleteContent, Filtercontents, GetContent, GetTagData, PostContent, PutTagsData } from './routes/content';
 import { ShareBrain, ShareBrainByShareId } from './routes/brain';
+import { SearchedFilter } from './routes/search';
 
 const app =express();
 app.use(express.json());
@@ -27,6 +28,9 @@ app.get("/api/v1/brain/share/:shareId", UserMiddleware, ShareBrainByShareId);
 app.get('/api/v1/tags',UserMiddleware, GetTagData);
 app.put('/api/v1/tags',UserMiddleware,PutTagsData);
 app.get('/api/v1/contents/:content',UserMiddleware,Filtercontents);
+// Add search functionality for dashboard as well as dashboard/:content , 2 different
+
+app.get("/api/v1/search",UserMiddleware,SearchedFilter);
 
 app.listen(3000, () => {
     console.log("we are listening to 3000");
