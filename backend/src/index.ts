@@ -24,7 +24,7 @@ app.post("/api/v1/content", UserMiddleware, PostContent);
 app.get("/api/v1/content", UserMiddleware, GetContent);
 app.delete("/api/v1/content", UserMiddleware, DeleteContent);
 app.post("/api/v1/brain/share", UserMiddleware, ShareBrain);
-app.get("/api/v1/brain/share/:shareId", UserMiddleware, ShareBrainByShareId);
+app.get("/api/v1/brain/share/:shareId", ShareBrainByShareId);
 app.get('/api/v1/tags',UserMiddleware, GetTagData);
 app.put('/api/v1/tags',UserMiddleware,PutTagsData);
 app.get('/api/v1/contents/:content',UserMiddleware,Filtercontents);
