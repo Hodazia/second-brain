@@ -7,6 +7,7 @@ import { BACKEND_URL, FRONTEND_URL } from "../../utils/config";
 import { useParams, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { SearchBar } from "./SearchBar";
+import { CardSkeleton } from "../ui/CardSkeleton";
 // import searchbar
 
 import { useCallback } from "react";
@@ -194,8 +195,13 @@ const Background = ({ onClickopen, cardRender, data, shared }: FuncProps) => {
       </div>
       <div id="cards">
         {loading ? (
-        <div className=" absolute left-1/2 top-1/2">
-           <div>Loading...</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* absolute left-1/2 top-1/2 */}
+          {/* <div>Loading...</div> */}
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+
         </div>
         ) :(
           
