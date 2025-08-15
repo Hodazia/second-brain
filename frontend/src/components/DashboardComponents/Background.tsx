@@ -25,6 +25,7 @@ interface Card {
   content: string;
   type: string;
   link: string;
+  createdAt:string;
   tags: string[];
 }
 

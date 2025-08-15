@@ -8,7 +8,7 @@ import { Toaster } from 'sonner'
 import DashBoard from './components/DashboardComponents/Dashboard.tsx'
 import Shared from './components/DashboardComponents/Shared.tsx'
 import { Navigate } from 'react-router-dom'
-import { CardSkeleton } from './components/ui/CardSkeleton.tsx'
+
 function App() {
   return (
     <>
@@ -23,7 +23,6 @@ function App() {
           <Route path='/dashboard' element={<Navigate to="/dashboard/all" replace />}/>
           <Route path="/dashboard/:filter" element={<DashBoard/>}/>
           <Route path="/share/:hash" element={<Shared />}/>
-          <Route path='/:random' element={<Landingpage />}/>
         </Routes>
       </BrowserRouter>
     </>
