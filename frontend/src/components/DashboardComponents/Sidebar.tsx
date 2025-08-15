@@ -70,7 +70,7 @@ function SidebarControl({ shared, open, setOpen }:prop){
                <Brain className="p-2 text-white text-4xl md:text-4xl h-12 w-12" />
                </div>
               
-              <div className="">DocuView</div>
+              <div className="">CardVault</div>
             </div>
           )}
           
