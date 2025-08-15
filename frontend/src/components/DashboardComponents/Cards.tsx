@@ -13,6 +13,8 @@ interface CardItem {
   link: string;
   content: string;
   tags: string[];
+  createdAt: string; // Add this line
+
 }
 
 interface Dataarray {
@@ -44,10 +46,14 @@ const Cards = ({data,deleteCard,shared}:Dataarray) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {data.map((item)=>{
         const icon =  icons.filter((i)=>i.name==item.type)
+
+          // Convert the createdAt ISO string into a readable date string
+          const formattedDate = new Date(item.createdAt).toLocaleDateString();
         return <Card shared={shared} del={deleteCard} title={item.title}
          key={item._id} id={item._id} content={item.content} 
          type={item.type} icon={icon[0].logo} Src={item.link} 
-         tags={item.tags} Date={new Date().toLocaleDateString()}/>
+         /* an issue here, the date is always the current newest date */
+         tags={item.tags} Date={formattedDate}/>
         })}
       </div>
     </div>

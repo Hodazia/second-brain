@@ -14,7 +14,7 @@ const Landingpage = () => {
       <div className="pt-16 "> 
         <Hero />
         <div id="demo">
-          <VideoShowcase />
+          <VideoShowcase Src="https://www.youtube.com/watch?v=yZ13CPLZHkY"/>
         </div>
         <div>
           <DashboardPrev />
